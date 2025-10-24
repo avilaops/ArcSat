@@ -1,0 +1,271 @@
+{
+  "module": "consultoria_industrial",
+  "version": "1.0.0",
+  "description": "Módulo especializado para assessoria, consultoria e auditoria industrial",
+  
+  "target_sectors": [
+    "automotiva",
+    "quimica_farmaceutica", 
+    "alimentos_bebidas",
+    "metalurgica_siderurgica",
+    "textil_calcados",
+    "papel_celulose",
+    "petroleo_gas",
+    "mineracao"
+  ],
+  
+  "specializations": {
+    "lean_manufacturing": {
+      "tools": ["azure_ai", "sequential_thinking", "memory", "time"],
+      "features": [
+        "mapeamento_fluxo_valor",
+        "identificacao_desperdicios",
+        "sistema_kanban_digital",
+        "calculo_takt_time",
+        "setup_reduction_smed",
+        "poka_yoke_automation"
+      ],
+      "kpis": [
+        "reducao_desperdicio",
+        "aumento_produtividade", 
+        "melhoria_qualidade",
+        "reducao_lead_time"
+      ]
+    },
+    
+    "iso_compliance": {
+      "tools": ["google_drive", "azure_ai", "postgresql", "memory"],
+      "standards": ["iso_9001", "iso_14001", "iso_45001", "iso_50001"],
+      "features": [
+        "gap_analysis_automatico",
+        "documentacao_digital",
+        "auditoria_interna_ia",
+        "gestao_nao_conformidades",
+        "planos_acao_automaticos",
+        "indicadores_qualidade"
+      ],
+      "compliance_score": "real_time_monitoring"
+    },
+    
+    "industria_40": {
+      "tools": ["azure_iot", "azure_ai", "time", "kubernetes"],
+      "technologies": ["iot_sensors", "machine_learning", "digital_twin", "predictive_analytics"],
+      "features": [
+        "sensoriamento_inteligente",
+        "manutencao_preditiva",
+        "otimizacao_energetica",
+        "controle_qualidade_ia",
+        "planejamento_producao",
+        "dashboard_tempo_real"
+      ],
+      "outcomes": [
+        "aumento_uptime",
+        "reducao_custos_manutencao",
+        "economia_energia",
+        "zero_defeitos"
+      ]
+    },
+    
+    "seguranca_trabalho": {
+      "tools": ["azure_ai", "memory", "slack", "time"],
+      "standards": ["nr_01", "nr_06", "nr_10", "nr_12", "nr_17", "nr_23"],
+      "features": [
+        "analise_riscos_ia",
+        "gestao_epi_automatica",
+        "treinamento_personalizado",
+        "investigacao_acidentes",
+        "indicadores_seguranca",
+        "alertas_preventivos"
+      ],
+      "metrics": ["taxa_acidentes", "indice_gravidade", "compliance_nrs"]
+    }
+  },
+  
+  "client_types": {
+    "pequena_industria": {
+      "funcionarios": "50-200",
+      "modules": ["lean_basic", "iso_9001", "seguranca_basica"],
+      "investment": "R$ 5.000-15.000/mes",
+      "roi_timeline": "6-12 meses",
+      "expected_roi": "200-400%"
+    },
+    
+    "media_industria": {
+      "funcionarios": "200-1000", 
+      "modules": ["lean_advanced", "iso_multiple", "industria_40_basic", "seguranca_avancada"],
+      "investment": "R$ 15.000-40.000/mes",
+      "roi_timeline": "8-16 meses",
+      "expected_roi": "250-500%"
+    },
+    
+    "grande_industria": {
+      "funcionarios": "1000+",
+      "modules": ["suite_completa", "multi_site", "advanced_analytics", "digital_transformation"],
+      "investment": "R$ 40.000-100.000/mes", 
+      "roi_timeline": "12-24 meses",
+      "expected_roi": "300-800%"
+    }
+  },
+  
+  "automation_workflows": {
+    "auditoria_automatica": {
+      "trigger": "scheduled_monthly",
+      "steps": [
+        "coleta_dados_automatica",
+        "analise_ia_conformidade", 
+        "identificacao_gaps",
+        "geracao_relatorio",
+        "envio_stakeholders",
+        "agendamento_acoes_corretivas"
+      ],
+      "tools_used": ["azure_ai", "google_drive", "slack", "memory"]
+    },
+    
+    "diagnostico_processos": {
+      "trigger": "client_request",
+      "steps": [
+        "mapeamento_processo_atual",
+        "coleta_dados_performance",
+        "benchmark_melhores_praticas",
+        "identificacao_oportunidades",
+        "calculo_roi_melhorias",
+        "apresentacao_resultados"
+      ],
+      "tools_used": ["puppeteer", "azure_ai", "sequential_thinking", "everart"]
+    },
+    
+    "acompanhamento_kpis": {
+      "trigger": "real_time_continuous",
+      "steps": [
+        "coleta_dados_tempo_real",
+        "calculo_indicadores",
+        "comparacao_metas",
+        "deteccao_desvios",
+        "alertas_automaticos",
+        "sugestoes_correcao"
+      ],
+      "tools_used": ["azure_ai", "postgresql", "slack", "time"]
+    }
+  },
+  
+  "integration_apis": {
+    "erp_systems": [
+      "sap_business_one",
+      "oracle_erp_cloud",
+      "totvs_protheus",
+      "microsiga_protheus",
+      "ifs_applications",
+      "infor_erp"
+    ],
+    
+    "iot_platforms": [
+      "azure_iot_hub",
+      "aws_iot_core", 
+      "google_cloud_iot",
+      "predix_ge",
+      "thingworx_ptc",
+      "mindsphere_siemens"
+    ],
+    
+    "quality_systems": [
+      "minitab",
+      "jmp_sas",
+      "statistica",
+      "quality_companion",
+      "infinity_qs",
+      "intelex"
+    ]
+  },
+  
+  "templates_relatorios": {
+    "diagnostico_lean": {
+      "sections": [
+        "executive_summary",
+        "current_state_analysis", 
+        "waste_identification",
+        "improvement_opportunities",
+        "implementation_roadmap",
+        "roi_projection"
+      ],
+      "auto_generation": true,
+      "customizable": true
+    },
+    
+    "auditoria_iso": {
+      "sections": [
+        "scope_objectives",
+        "methodology_approach",
+        "findings_nonconformities",
+        "evidence_documentation",
+        "corrective_actions",
+        "compliance_score"
+      ],
+      "standards_supported": ["iso_9001", "iso_14001", "iso_45001"],
+      "auto_evidence_collection": true
+    },
+    
+    "business_case": {
+      "sections": [
+        "current_situation",
+        "proposed_solution",
+        "investment_required",
+        "expected_benefits", 
+        "risk_analysis",
+        "implementation_timeline"
+      ],
+      "roi_calculator": "integrated",
+      "scenario_modeling": true
+    }
+  },
+  
+  "knowledge_base": {
+    "best_practices": {
+      "lean_manufacturing": "comprehensive_library",
+      "iso_standards": "updated_requirements",
+      "industry_40": "latest_technologies", 
+      "safety_regulations": "nrs_updated"
+    },
+    
+    "case_studies": {
+      "automotive": "10+ success_cases",
+      "chemical": "8+ implementations",
+      "food_beverage": "12+ projects",
+      "metals": "15+ transformations"
+    },
+    
+    "benchmarks": {
+      "industry_kpis": "real_time_updated",
+      "competitor_analysis": "automated_monitoring", 
+      "market_trends": "ai_powered_insights"
+    }
+  },
+  
+  "pricing_models": {
+    "subscription_saas": {
+      "basic": "R$ 5.000/mes - até 3 clientes",
+      "professional": "R$ 15.000/mes - até 10 clientes", 
+      "enterprise": "R$ 30.000/mes - clientes ilimitados"
+    },
+    
+    "project_based": {
+      "diagnostico": "R$ 10.000-30.000 por projeto",
+      "implementacao": "R$ 50.000-200.000 por projeto",
+      "acompanhamento": "R$ 5.000-15.000/mes por cliente"
+    },
+    
+    "revenue_share": {
+      "percentage": "10-20% dos savings obtidos",
+      "minimum_guarantee": "R$ 10.000/mes",
+      "duration": "12-36 meses"
+    }
+  },
+  
+  "success_metrics": {
+    "client_satisfaction": "> 95%",
+    "project_success_rate": "> 90%", 
+    "average_roi": "300-500%",
+    "implementation_time": "50% faster than traditional",
+    "accuracy_predictions": "> 85%",
+    "cost_reduction": "40-70% vs manual processes"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "name": "arcsat-industrial-crm",
+  "version": "1.0.0",
+  "description": "ArcSat Industrial - Sistema CRM para Consultoria Industrial com Azure AI",
+  "main": "src/gestao-clientes-industrial.js",
+  "scripts": {
+    "start": "node src/gestao-clientes-industrial.js",
+    "dev": "nodemon src/gestao-clientes-industrial.js",
+    "industrial": "node src/gestao-clientes-industrial.js",
+    "dashboard": "start http://localhost:5000/dashboard && npm run industrial",
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src/**/*.js",
+    "industrial:lean": "node scripts/setup-lean-manufacturing.js",
+    "industrial:iso": "node scripts/setup-iso-compliance.js",
+    "industrial:i4": "node scripts/setup-industry40.js",
+    "industrial:safety": "node scripts/setup-safety-management.js",
+    "azure:deploy": "az staticwebapp deploy",
+    "mcp:health": "echo 'Verificando MCP...' && npm list @modelcontextprotocol/server-memory 2>nul || echo 'MCP offline - usando Azure AI direto'",
+    "health": "curl -s http://localhost:5000/health || echo 'Servidor offline'"
+  },
+  "keywords": [
+    "crm",
+    "industrial",
+    "consultoria",
+    "azure-ai",
+    "lean-manufacturing",
+    "industry-4.0",
+    "iso-compliance",
+    "safety-management",
+    "oee",
+    "automation"
+  ],
+  "author": "Ávila Ops",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/openai": "^1.0.0-beta.12",
+    "@azure/identity": "^4.0.1",
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.6.0",
+    "winston": "^3.11.0",
+    "joi": "^17.12.2",
+    "jsonwebtoken": "^9.0.2",
+    "bcrypt": "^5.1.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.13",
+    "axios": "^1.7.2",
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "@types/express": "^4.17.21",
+    "nodemon": "^3.1.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4",
+    "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/avilaops/ArcSat.git"
+  },
+  "homepage": "https://arcsat.com.br",
+  "bugs": {
+    "url": "https://github.com/avilaops/ArcSat/issues"
+  }
+}
