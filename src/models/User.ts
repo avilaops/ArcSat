@@ -1,10 +1,11 @@
-import mongoose, { Schema, Document, Model } from 'mongoose';
+import mongoose, { Schema, Document, Model, Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import { IUser, UserRole } from '../types/index.js';
 import config from '../config/env.js';
 
 // Interface do documento (métodos de instância)
-export interface IUserDocument extends Omit<IUser, '_id'>, Document {
+export interface IUserDocument extends Omit<IUser, '_id' | 'companyId'>, Document {
+  companyId: Types.ObjectId;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -65,7 +66,7 @@ const userSchema = new Schema<IUserDocument, IUserModel>(
   {
     timestamps: true,
     toJSON: {
-      transform: (_doc, ret) => {
+      transform: (_doc, ret: Record<string, unknown>) => {
         ret.id = ret._id;
         delete ret._id;
         delete ret.__v;
@@ -81,7 +82,7 @@ userSchema.index({ email: 1, companyId: 1 });
 userSchema.index({ companyId: 1, isActive: 1 });
 
 // Hook: Hash password antes de salvar
-userSchema.pre('save', async function (next) {
+userSchema.pre<IUserDocument>('save', async function (next) {
   // Só faz hash se a senha foi modificada
   if (!this.isModified('password')) {
     return next();
