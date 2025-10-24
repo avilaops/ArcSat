@@ -1,0 +1,8 @@
+- Introdução
+  - [Visão geral](README.md)
+  - [Changelog](changelog.md)
+- Guias
+  - [Primeiros passos](guides/onboarding.md)
+  - [Integrações](guides/integrations.md)
+- API
+  - [Endpoints](api/endpoints.md)

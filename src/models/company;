@@ -1,0 +1,35 @@
+
+mport mongoose from "mongoose";
+
+const companySchema = new mongoose.Schema({
+  cnpj: String,
+  razaoSocial: String,
+  nomeFantasia: String,
+  naturezaJuridica: String,
+  identificadorMatrizFilial: String,
+  situacaoCadastral: String,
+  dataSituacaoCadastral: String,
+  cnaeFiscal: {
+    codigo: Number,
+    descricao: String
+  },
+  endereco: {
+    logradouro: String,
+    numero: String,
+    complemento: String,
+    bairro: String,
+    municipio: String,
+    uf: String,
+    cep: String
+  },
+  contato: {
+    telefone1: String,
+    telefone2: String,
+    email: String
+  },
+  capitalSocial: Number,
+  porte: String,
+  dataInicioAtividade: String
+});
+
+export const Company = mongoose.model("Company", companySchema);
