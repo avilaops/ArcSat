@@ -285,7 +285,7 @@ Atualizar o código do repositório avilaops/ArcSat para funcionar perfeitamente
 2. **Configurar secrets**: Adicionar secrets no Key Vault
 3. **Custom domains**: Configurar domínios personalizados
 4. **Monitoring setup**: Configurar alertas no Application Insights
-5. **Performance tuning**: Ajustar based em métricas reais
+5. **Performance tuning**: Ajustar baseado em métricas reais
 6. **Backup strategy**: Implementar backup do MongoDB
 7. **Disaster recovery**: Documentar procedimentos
 
