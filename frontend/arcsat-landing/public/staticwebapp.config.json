@@ -1,26 +1,18 @@
 {
-  "routes": [
-    {
-      "route": "/",
-      "serve": "/index.html",
-      "statusCode": 200
-    },
-    {
-      "route": "/*",
-      "serve": "/index.html",
-      "statusCode": 200
-    }
-  ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["*.{css,scss,sass,js,ts,svg,png,jpg,jpeg,gif,ico,woff,woff2,ttf,eot}"]
+    "exclude": ["*.{css,scss,sass,js,ts,svg,png,jpg,jpeg,gif,ico,woff,woff2,ttf,eot,json,xml,txt}"]
   },
   "mimeTypes": {
     ".ts": "text/typescript",
-    ".tsx": "text/typescript"
+    ".tsx": "text/typescript",
+    ".json": "application/json"
   },
   "globalHeaders": {
-    "cache-control": "public, max-age=31536000, immutable"
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
   },
   "responseOverrides": {
     "404": {
@@ -28,4 +20,5 @@
       "statusCode": 200
     }
   }
+}
 }

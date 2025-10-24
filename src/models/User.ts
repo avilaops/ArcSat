@@ -43,8 +43,7 @@ const userSchema = new Schema<IUserDocument, IUserModel>(
       default: UserRole.USER,
     },
     companyId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Company',
+      type: String,
       required: [true, 'Empresa é obrigatória'],
       index: true,
     },
@@ -68,8 +67,8 @@ const userSchema = new Schema<IUserDocument, IUserModel>(
       transform: (_doc, ret) => {
         ret.id = ret._id;
         delete ret._id;
-        delete ret.__v;
-        delete ret.password;
+        delete (ret as any).__v;
+        delete (ret as any).password;
         return ret;
       },
     },
