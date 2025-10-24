@@ -1,0 +1,28 @@
+# Azure App Service Deployment Configuration
+# This file contains configuration for Azure App Service deployment
+
+# Node.js version
+NODE_VERSION=18.x
+
+# Build command (runs during deployment)
+BUILD_COMMAND=npm ci --production
+
+# Start command
+START_COMMAND=node src/server.js
+
+# Enable Application Insights
+APPLICATIONINSIGHTS_ENABLE_LOGGING=true
+
+# Azure-specific settings
+WEBSITE_NODE_DEFAULT_VERSION=18.x
+WEBSITES_ENABLE_APP_SERVICE_STORAGE=true
+WEBSITE_RUN_FROM_PACKAGE=0
+
+# Logging
+LOGGING_LEVEL=info
+
+# Performance settings
+NODE_OPTIONS=--max-old-space-size=2048
+
+# Health check path
+HEALTH_CHECK_PATH=/health
