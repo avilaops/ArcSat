@@ -26,3 +26,5 @@ NODE_OPTIONS=--max-old-space-size=2048
 
 # Health check path
 HEALTH_CHECK_PATH=/health
+[config]
+SCM_DO_BUILD_DURING_DEPLOYMENT=true

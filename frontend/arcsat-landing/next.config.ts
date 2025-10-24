@@ -53,6 +53,16 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // Configuração para Azure Static Web Apps
+  output: 'export',
+  
+  // Otimizações
+  images: {
+    unoptimized: true, // Azure Static Web Apps não suporta Image Optimization
+  },
+  
+  // Trailing slashes para compatibilidade
+  trailingSlash: true,
 };
 
 export default nextConfig;

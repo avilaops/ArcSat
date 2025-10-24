@@ -1,4 +1,5 @@
 name: ArcSat CI/CD - Azure Deployment
+﻿name: ArcSat CI/CD
 
 on:
   push:
@@ -53,8 +54,8 @@ jobs:
 
   build-and-deploy-frontend:
     runs-on: ubuntu-latest
-    environment: production
-
+    name: Build and Deploy Frontend
+    
     steps:
     - name: 📥 Checkout code
       uses: actions/checkout@v3
@@ -65,18 +66,38 @@ jobs:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
         cache-dependency-path: frontend/arcsat-landing/package-lock.json
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        cache-dependency-path: './frontend/arcsat-landing/package-lock.json'
 
     - name: 📦 Install Dependencies
       working-directory: ./frontend/arcsat-landing
       run: npm ci
 
     - name: 🏗️ Build
+    - name: Build Application
       working-directory: ./frontend/arcsat-landing
       run: npm run build
       env:
         NEXT_TELEMETRY_DISABLED: 1
 
     - name: 🚀 Deploy to Azure Static Web Apps
+    - name: Upload artifact for deployment
+      uses: actions/upload-artifact@v4
+      with:
+        name: static-site
+        path: ./frontend/arcsat-landing/out
+
+    - name: Deploy to Azure Static Web Apps
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: Azure/static-web-apps-deploy@v1
       with:
         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
@@ -101,3 +122,23 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./docs
         cname: docs.arcsat.com.br
+        action: upload
+        app_location: ./frontend/arcsat-landing/out
+        skip_app_build: true
+        skip_api_build: true
+
+  # deploy-docs:
+  #   runs-on: ubuntu-latest
+  #   name: Deploy Documentation
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  #   
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4
+  #
+  #   - name: Deploy to GitHub Pages
+  #     uses: peaceiris/actions-gh-pages@v4
+  #     with:
+  #       github_token: ${{ secrets.GITHUB_TOKEN }}
+  #       publish_dir: ./docs
+  #       force_orphan: true
