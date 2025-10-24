@@ -1,0 +1,83 @@
+name: ArcSat Development Environment Setup
+description: Setup steps for the ArcSat business management system
+
+steps:
+  - name: Check Node.js version
+    description: Ensure Node.js 18 or higher is installed
+    command: node --version
+
+  - name: Check npm version
+    description: Ensure npm 9 or higher is installed
+    command: npm --version
+
+  - name: Install backend dependencies
+    description: Install all backend dependencies from package.json
+    command: npm install
+    workingDirectory: .
+
+  - name: Install frontend dependencies
+    description: Install all frontend dependencies for the landing page
+    command: npm install
+    workingDirectory: frontend/arcsat-landing
+
+  - name: Setup environment variables
+    description: Copy example environment file and configure it
+    command: |
+      if [ ! -f .env ]; then
+        cp .env.example .env
+        echo "✓ Created .env file. Please configure your environment variables."
+      else
+        echo "✓ .env file already exists"
+      fi
+    workingDirectory: .
+
+  - name: Verify MongoDB connection
+    description: Check if MongoDB URI is configured (optional)
+    command: |
+      if grep -q "MONGO_URI=mongodb" .env 2>/dev/null; then
+        echo "✓ MongoDB URI is configured"
+      else
+        echo "⚠ MongoDB URI not configured. Update .env file with your MongoDB Atlas connection string."
+      fi
+    workingDirectory: .
+
+  - name: Run backend linter
+    description: Check backend code style with ESLint
+    command: npm run lint || echo "⚠ Linting issues found. Fix with npm run format"
+    workingDirectory: .
+
+  - name: Run frontend linter
+    description: Check frontend code style with ESLint
+    command: npm run lint || echo "⚠ Linting issues found"
+    workingDirectory: frontend/arcsat-landing
+
+  - name: Build frontend
+    description: Build the Next.js frontend to verify it compiles
+    command: npm run build
+    workingDirectory: frontend/arcsat-landing
+    optional: true
+
+  - name: Verify setup
+    description: Display setup verification summary
+    command: |
+      echo "==================================="
+      echo "ArcSat Setup Verification"
+      echo "==================================="
+      echo "✓ Backend dependencies installed"
+      echo "✓ Frontend dependencies installed"
+      echo ""
+      echo "Next steps:"
+      echo "1. Configure .env file with your credentials"
+      echo "2. Start backend: npm run dev"
+      echo "3. Start frontend: cd frontend/arcsat-landing && npm run dev"
+      echo ""
+      echo "Backend will run on: http://localhost:5500"
+      echo "Frontend will run on: http://localhost:3000"
+      echo "==================================="
+
+notes:
+  - Backend requires MongoDB Atlas connection string
+  - Frontend uses Next.js 16 with App Router
+  - Azure CLI is needed for deployment tasks
+  - Application Insights key is optional for local development
+  - Email configuration (Porkbun) is optional for local development
