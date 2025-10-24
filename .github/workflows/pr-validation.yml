@@ -1,0 +1,77 @@
+name: Pull Request Validation
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate PR Changes
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Check PR title format
+      if: github.event_name == 'pull_request'
+      run: |
+        PR_TITLE="${{ github.event.pull_request.title }}"
+        echo "PR Title: $PR_TITLE"
+        
+        # Check if title starts with conventional commit type
+        if [[ ! "$PR_TITLE" =~ ^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?:\ .+ ]]; then
+          echo "::warning::PR title should follow conventional commits format (feat:, fix:, docs:, etc.)"
+        fi
+
+    - name: Check for large files
+      run: |
+        echo "Checking for large files (>5MB)..."
+        LARGE_FILES=$(find . -type f -size +5M -not -path "./.git/*" -not -path "./node_modules/*" 2>/dev/null || true)
+        if [ -n "$LARGE_FILES" ]; then
+          echo "::warning::Found large files that should not be committed:"
+          echo "$LARGE_FILES"
+        else
+          echo "✓ No large files found"
+        fi
+
+    - name: Check for secrets
+      run: |
+        echo "Checking for potential secrets in code..."
+        # Check for common secret patterns
+        if git --no-pager diff origin/main...HEAD | grep -iE "(password|api[_-]?key|secret|token|credential)" | grep -v "test" | grep -v "example" | grep -v ".md:"; then
+          echo "::warning::Potential secrets detected in code. Please review carefully."
+        else
+          echo "✓ No obvious secrets detected"
+        fi
+
+  quick-test:
+    runs-on: ubuntu-latest
+    name: Quick Tests
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: Type Check
+      run: npm run typecheck
+      continue-on-error: false
+
+    - name: Lint
+      run: npm run lint --if-present
+      continue-on-error: true
+
+    - name: Run Tests
+      run: npm test --if-present
+      continue-on-error: true
