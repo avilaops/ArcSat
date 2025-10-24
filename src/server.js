@@ -22,10 +22,35 @@ import cnpjRoutes from "./routes/cnpj.js";
 const app = express();
 
 // Middlewares
-app.use(cors({
-  origin: process.env.CORS_ORIGINS ? JSON.parse(process.env.CORS_ORIGINS) : '*',
-  credentials: true
-}));
+// CORS Configuration - secure by default
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // In development, allow all origins
+    if (process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    
+    // In production, use configured origins or deny
+    const allowedOrigins = process.env.CORS_ORIGINS 
+      ? JSON.parse(process.env.CORS_ORIGINS)
+      : ['https://arcsat.com.br', 'https://app.arcsat.com.br'];
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  maxAge: 86400 // 24 hours
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Log de requisições no Application Insights

@@ -150,7 +150,8 @@ Atualizar o código do repositório avilaops/ArcSat para funcionar perfeitamente
 ### Backend (src/server.js)
 - ✅ Application Insights inicializado no início
 - ✅ Validação de variáveis de ambiente
-- ✅ CORS configurável via ambiente
+- ✅ CORS configurável via ambiente com whitelist seguro
+- ✅ CORS permite todos em desenvolvimento, restrito em produção
 - ✅ Request tracking automático
 - ✅ Health check endpoint (`/health`)
 - ✅ Readiness check endpoint (`/api/health/ready`)
@@ -253,7 +254,8 @@ Atualizar o código do repositório avilaops/ArcSat para funcionar perfeitamente
 - ✅ Security headers
 - ✅ Key Vault integration
 - ✅ Secrets não hardcoded
-- ✅ CORS configurável
+- ✅ CORS configurável com whitelist
+- ✅ Production-safe CORS defaults
 
 ### Reliability
 - ✅ Health checks
