@@ -8,6 +8,9 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     name: Validate PR Changes
+    permissions:
+      contents: read
+      pull-requests: read
     
     steps:
     - name: Checkout code
@@ -50,6 +53,8 @@ jobs:
   quick-test:
     runs-on: ubuntu-latest
     name: Quick Tests
+    permissions:
+      contents: read
     
     steps:
     - name: Checkout code

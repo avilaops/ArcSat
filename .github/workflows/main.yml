@@ -17,6 +17,8 @@ jobs:
   build-frontend:
     runs-on: ubuntu-latest
     name: Build Frontend
+    permissions:
+      contents: read
     
     steps:
     - name: Checkout code
@@ -55,6 +57,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy Frontend to Azure
     needs: build-frontend
+    permissions:
+      contents: read
+      id-token: write
     if: |
       (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'workflow_dispatch' && !inputs.skip_deploy)
@@ -103,6 +108,8 @@ jobs:
   build-backend:
     runs-on: ubuntu-latest
     name: Build and Test Backend
+    permissions:
+      contents: read
     
     steps:
     - name: Checkout code
