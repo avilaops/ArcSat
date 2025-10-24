@@ -81,10 +81,12 @@ Frontend runs on: http://localhost:3000
 
 ### Documentation
 ```bash
-npm run docs:serve
+npm run docs:serve  # Note: Uses port 3000 by default
+# Or specify a different port to avoid conflict with frontend:
+docsify serve docs -p 3001
 ```
 
-Docs available on: http://localhost:3000
+Docs available on: http://localhost:3000 (or custom port)
 
 ## Environment Variables
 
