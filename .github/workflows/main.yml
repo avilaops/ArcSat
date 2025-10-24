@@ -1,4 +1,4 @@
-﻿name: ArcSat CI/CD
+name: ArcSat CI/CD
 
 on:
   push:
@@ -71,8 +71,10 @@ jobs:
 
     - name: Check if Azure token is available
       id: check-secret
+      env:
+        AZURE_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
       run: |
-        if [ -z "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}" ]; then
+        if [ -z "$AZURE_TOKEN" ]; then
           echo "has_token=false" >> $GITHUB_OUTPUT
           echo "⚠️ Azure Static Web Apps API token is not configured"
         else
