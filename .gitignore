@@ -66,6 +66,10 @@ __azurite_*.json
 web.config.backup
 iisnode.yml
 
+# Docker
+docker-compose.override.yml
+.docker/
+
 # Logs
 logs/
 *.log
