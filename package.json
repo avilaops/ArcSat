@@ -17,7 +17,10 @@
     "typecheck": "tsc --noEmit",
     "frontend:dev": "cd frontend/arcsat-landing && npm run dev",
     "frontend:build": "cd frontend/arcsat-landing && npm run build",
-    "docs:serve": "docsify serve docs"
+    "docs:serve": "docsify serve docs",
+    "azure:install": "npm ci --production",
+    "azure:start": "node src/server.js",
+    "postinstall": "echo 'Dependencies installed successfully'"
   },
   "keywords": [
     "crm",

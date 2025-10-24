@@ -1,0 +1,54 @@
+# Docker Compose for local development and testing
+version: '3.8'
+
+services:
+  # Backend API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: arcsat-api
+    ports:
+      - "5500:8080"
+    environment:
+      - NODE_ENV=development
+      - PORT=8080
+      - MONGO_URI=${MONGO_URI}
+      - JWT_SECRET=${JWT_SECRET}
+      - FRONTEND_URL=http://localhost:3000
+      - API_URL=http://localhost:5500
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - arcsat-network
+
+  # MongoDB (for local development only)
+  mongodb:
+    image: mongo:7.0
+    container_name: arcsat-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin123
+      - MONGO_INITDB_DATABASE=arcsat
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - arcsat-network
+    restart: unless-stopped
+
+networks:
+  arcsat-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local

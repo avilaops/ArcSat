@@ -54,6 +54,21 @@ Thumbs.db
 
 # Azure
 .azure/
+*.publish.xml
+*.PublishSettings
+
+# Azure Functions
+local.settings.json
+__buncache__/
+__azurite_*.json
+
+# IIS/Azure App Service
+web.config.backup
+iisnode.yml
+
+# Docker
+docker-compose.override.yml
+.docker/
 
 # Logs
 logs/

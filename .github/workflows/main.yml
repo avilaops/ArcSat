@@ -1,3 +1,4 @@
+name: ArcSat CI/CD - Azure Deployment
 ﻿name: ArcSat CI/CD
 
 on:
@@ -5,13 +6,66 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '18.x'
+  AZURE_WEBAPP_NAME: arcsat-api
 
 jobs:
+  build-and-deploy-api:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+
+    - name: 🔧 Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: 📦 Install Dependencies
+      run: npm ci
+
+    - name: 🧪 Run Tests
+      run: npm test
+      continue-on-error: true
+
+    - name: 📊 Create deployment package
+      run: |
+        mkdir -p deploy
+        cp -r src package*.json web.config startup.sh .deployment deploy/
+        cd deploy && npm ci --production
+
+    - name: 🚀 Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_API }}
+        package: ./deploy
+        
+    - name: 🔍 Test API Health
+      run: |
+        sleep 30
+        curl -f https://${{ env.AZURE_WEBAPP_NAME }}.azurewebsites.net/health || echo "Health check failed"
+
   build-and-deploy-frontend:
     runs-on: ubuntu-latest
     name: Build and Deploy Frontend
     
     steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+
+    - name: 🔧 Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/arcsat-landing/package-lock.json
     - name: Checkout code
       uses: actions/checkout@v4
       with:
@@ -24,14 +78,18 @@ jobs:
         cache: 'npm'
         cache-dependency-path: './frontend/arcsat-landing/package-lock.json'
 
-    - name: Install Dependencies
+    - name: 📦 Install Dependencies
       working-directory: ./frontend/arcsat-landing
       run: npm ci
 
+    - name: 🏗️ Build
     - name: Build Application
       working-directory: ./frontend/arcsat-landing
       run: npm run build
+      env:
+        NEXT_TELEMETRY_DISABLED: 1
 
+    - name: 🚀 Deploy to Azure Static Web Apps
     - name: Upload artifact for deployment
       uses: actions/upload-artifact@v4
       with:
@@ -44,6 +102,26 @@ jobs:
       with:
         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
         repo_token: ${{ secrets.GITHUB_TOKEN }}
+        action: "upload"
+        app_location: "/frontend/arcsat-landing"
+        output_location: ".next"
+        skip_app_build: true
+
+  deploy-docs:
+    runs-on: ubuntu-latest
+    environment: production
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+
+    - name: 📚 Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs
+        cname: docs.arcsat.com.br
         action: upload
         app_location: ./frontend/arcsat-landing/out
         skip_app_build: true
