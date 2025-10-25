@@ -4,15 +4,11 @@
     "exclude": ["*.{css,scss,sass,js,ts,svg,png,jpg,jpeg,gif,ico,woff,woff2,ttf,eot,json,xml,txt}"]
   },
   "mimeTypes": {
-    ".ts": "text/typescript",
-    ".tsx": "text/typescript",
     ".json": "application/json"
   },
   "globalHeaders": {
     "X-Content-Type-Options": "nosniff",
-    "X-Frame-Options": "DENY",
-    "X-XSS-Protection": "1; mode=block",
-    "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
+    "X-Frame-Options": "DENY"
   },
   "responseOverrides": {
     "404": {
