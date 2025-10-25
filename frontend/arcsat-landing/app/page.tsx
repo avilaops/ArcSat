@@ -1,4 +1,5 @@
 ﻿import Navbar from "../components/Navbar"
+import SystemsShowcase from "../components/SystemsShowcase"
 
 export default function Home() {
   return (
@@ -122,6 +123,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Systems Showcase Section */}
+      <SystemsShowcase />
 
       {/* Benefits Section */}
       <section className="py-20 px-4 bg-gray-50">
