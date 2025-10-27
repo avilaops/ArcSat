@@ -1,0 +1,90 @@
+name: Deploy to Azure App Service
+
+on:
+  push:
+    branches:
+      - main
+      - production
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: arcsat-crm
+  NODE_VERSION: '20.x'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+
+    - name: Install backend dependencies
+      run: npm ci
+
+    - name: Install frontend dependencies
+      run: |
+        cd frontend/arcsat-landing
+        npm ci
+
+    - name: Build frontend
+      run: |
+        cd frontend/arcsat-landing
+        npm run build
+
+    - name: Run tests
+      run: npm test
+      env:
+        CI: true
+
+    - name: Create deployment package
+      run: |
+        zip -r deployment.zip . \
+          -x "*.git*" \
+          -x "*node_modules*" \
+          -x "*.env*" \
+          -x "*coverage*" \
+          -x "*tests*"
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: deployment.zip
+
+    - name: Configure App Settings
+      uses: azure/appservice-settings@v1
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        app-settings-json: |
+          [
+            {
+              "name": "NODE_ENV",
+              "value": "production",
+              "slotSetting": false
+            },
+            {
+              "name": "WEBSITE_NODE_DEFAULT_VERSION",
+              "value": "~20",
+              "slotSetting": false
+            },
+            {
+              "name": "SCM_DO_BUILD_DURING_DEPLOYMENT",
+              "value": "true",
+              "slotSetting": false
+            }
+          ]
+
+    - name: Logout from Azure
+      run: az logout

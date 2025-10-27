@@ -29,7 +29,40 @@ app.get("/", (req, res) => {
   res.json({ 
     message: "Bem-vindo ao CRM da Ávila Inc",
     version: "1.0.0",
-    docs: "/docs"
+    docs: "/docs",
+    status: "online"
+  });
+});
+
+// Health check endpoint para Azure App Service
+app.get("/health", (req, res) => {
+  const healthcheck = {
+    uptime: process.uptime(),
+    status: "OK",
+    timestamp: Date.now(),
+    database: "connected" // Será atualizado pelo middleware de DB
+  };
+  
+  try {
+    res.status(200).json(healthcheck);
+  } catch (error) {
+    healthcheck.status = "ERROR";
+    res.status(503).json(healthcheck);
+  }
+});
+
+// Endpoint de status detalhado
+app.get("/api/v1/status", (req, res) => {
+  res.json({
+    service: "ArcSat CRM",
+    version: "1.0.0",
+    environment: process.env.NODE_ENV || "development",
+    mongodb: {
+      connected: true,
+      host: process.env.MONGODB_URI ? "configured" : "not configured"
+    },
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString()
   });
 });
 

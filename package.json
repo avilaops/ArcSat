@@ -8,11 +8,22 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:unit": "jest --testPathPattern=tests/unit",
     "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint src/**/*.js --fix",
     "format": "prettier --write 'src/**/*.{js,json}'",
+    "format:check": "prettier --check 'src/**/*.{js,json}'",
     "frontend:dev": "cd frontend/arcsat-landing && npm run dev",
     "frontend:build": "cd frontend/arcsat-landing && npm run build",
-    "docs:serve": "docsify serve docs"
+    "frontend:start": "cd frontend/arcsat-landing && npm start",
+    "docs:serve": "docsify serve docs",
+    "db:seed": "node scripts/seed-db.js",
+    "db:clean": "node scripts/clean-test-db.js",
+    "docker:build": "docker build -t arcsat-crm .",
+    "docker:run": "docker run -p 5500:5500 --env-file .env arcsat-crm",
+    "docker:compose": "docker-compose up -d",
+    "docker:down": "docker-compose down"
   },
   "keywords": [
     "crm",
