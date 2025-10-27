@@ -7,6 +7,8 @@ Sistema de Gestão Empresarial completo com CRM, ERP e funcionalidades multi-ten
 ![Next.js](https://img.shields.io/badge/Next.js-16-black.svg)
 ![License](https://img.shields.io/badge/license-Private-red.svg)
 
+> 🎯 **Deploy Rápido:** Novo no projeto? Comece aqui → [📋 DEPLOY_INDEX.md](./DEPLOY_INDEX.md)
+
 ## 📚 Índice
 
 - [Sobre o Projeto](#sobre-o-projeto)
