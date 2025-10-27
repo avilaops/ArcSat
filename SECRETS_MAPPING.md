@@ -41,7 +41,7 @@ Este documento mapeia quais secrets são usados em cada workflow.
 ### 1. AZURE_CREDENTIALS (Obrigatório)
 ```yaml
 # Arquivo: .github/workflows/azure-deploy.yml
-# Linhas 64-65
+# Linhas 61-64
 - name: Login to Azure
   uses: azure/login@v1
   with:
@@ -115,7 +115,7 @@ CLOUDFLARE_API_TOKEN="${{ secrets.CLOUDFLARE_API_TOKEN }}"
 ### AZURE_CREDENTIALS (Obrigatório)
 ```yaml
 # Arquivo: .github/workflows/ci-cd.yml
-# Linha 76
+# Linhas 73-76
 - name: Login to Azure
   uses: azure/login@v1
   with:
