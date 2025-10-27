@@ -40,7 +40,8 @@ Este documento mapeia quais secrets são usados em cada workflow.
 
 ### 1. AZURE_CREDENTIALS (Obrigatório)
 ```yaml
-# Linha 64-65
+# Arquivo: .github/workflows/azure-deploy.yml
+# Linhas 64-65
 - name: Login to Azure
   uses: azure/login@v1
   with:
@@ -53,6 +54,7 @@ Este documento mapeia quais secrets são usados em cada workflow.
 
 ### 2. MONGO_ATLAS_URI (Obrigatório)
 ```yaml
+# Arquivo: .github/workflows/azure-deploy.yml
 # Linha 80
 MONGODB_URI="${{ secrets.MONGO_ATLAS_URI }}"
 ```
@@ -63,6 +65,7 @@ MONGODB_URI="${{ secrets.MONGO_ATLAS_URI }}"
 
 ### 3. JWT_SECRET (Obrigatório)
 ```yaml
+# Arquivo: .github/workflows/azure-deploy.yml
 # Linha 81
 JWT_SECRET="${{ secrets.JWT_SECRET }}"
 ```
@@ -73,6 +76,7 @@ JWT_SECRET="${{ secrets.JWT_SECRET }}"
 
 ### 4. OPENAI_API_KEY (Opcional)
 ```yaml
+# Arquivo: .github/workflows/azure-deploy.yml
 # Linha 82
 OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
 ```
@@ -85,6 +89,7 @@ OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
 
 ### 5. CLOUDFLARE_API_TOKEN (Opcional)
 ```yaml
+# Arquivo: .github/workflows/azure-deploy.yml
 # Linha 83
 CLOUDFLARE_API_TOKEN="${{ secrets.CLOUDFLARE_API_TOKEN }}"
 ```
@@ -109,6 +114,7 @@ CLOUDFLARE_API_TOKEN="${{ secrets.CLOUDFLARE_API_TOKEN }}"
 
 ### AZURE_CREDENTIALS (Obrigatório)
 ```yaml
+# Arquivo: .github/workflows/ci-cd.yml
 # Linha 76
 - name: Login to Azure
   uses: azure/login@v1
@@ -134,6 +140,7 @@ CLOUDFLARE_API_TOKEN="${{ secrets.CLOUDFLARE_API_TOKEN }}"
 
 ### 1. AZURE_WEBAPP_PUBLISH_PROFILE_API
 ```yaml
+# Arquivo: .github/workflows/main.yml
 # Linha 32
 publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_API }}
 ```
@@ -144,6 +151,7 @@ publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_API }}
 
 ### 2. AZURE_STATIC_WEB_APPS_API_TOKEN
 ```yaml
+# Arquivo: .github/workflows/main.yml
 # Linha 58
 azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
 ```
@@ -215,18 +223,18 @@ azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
 
 ### AZURE_CREDENTIALS
 ```powershell
-az ad sp create-for-rbac \
-  --name "github-actions-arcsat" \
-  --role contributor \
-  --scopes /subscriptions/<sub-id>/resourceGroups/rg-arcsat-crm \
+az ad sp create-for-rbac `
+  --name "github-actions-arcsat" `
+  --role contributor `
+  --scopes /subscriptions/<sub-id>/resourceGroups/rg-arcsat-crm `
   --sdk-auth
 ```
 
 ### AZURE_WEBAPP_PUBLISH_PROFILE_API
 ```powershell
-az webapp deployment list-publishing-profiles \
-  --name arcsat-api \
-  --resource-group rg-arcsat-crm \
+az webapp deployment list-publishing-profiles `
+  --name arcsat-api `
+  --resource-group rg-arcsat-crm `
   --xml
 ```
 
