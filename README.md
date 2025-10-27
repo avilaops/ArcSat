@@ -7,6 +7,8 @@ Sistema de Gestão Empresarial completo com CRM, ERP e funcionalidades multi-ten
 ![Next.js](https://img.shields.io/badge/Next.js-16-black.svg)
 ![License](https://img.shields.io/badge/license-Private-red.svg)
 
+> 🎯 **Deploy Rápido:** Novo no projeto? Comece aqui → [📋 DEPLOY_INDEX.md](./DEPLOY_INDEX.md)
+
 ## 📚 Índice
 
 - [Sobre o Projeto](#sobre-o-projeto)
@@ -264,9 +266,28 @@ console.log(data.token); // JWT token
 
 ### Azure App Service
 
-1. Configure as variáveis de ambiente no Azure
-2. Configure CI/CD com GitHub Actions
-3. Deploy automático via push para `main`
+#### Setup Rápido (5 minutos):
+
+👉 **[Quick Start - Configurar GitHub Secrets](./QUICK_SECRETS_SETUP.md)**
+
+#### Passos:
+
+1. **Configure GitHub Secrets** - [Guia Completo](./GITHUB_SECRETS_SETUP.md)
+   - `AZURE_CREDENTIALS` - Credenciais do Azure
+   - `MONGO_ATLAS_URI` - Conexão MongoDB
+   - `JWT_SECRET` - Chave JWT
+   - `CLOUDFLARE_API_TOKEN` - Token Cloudflare
+   
+2. **Deploy automático via push para `main`**
+   ```bash
+   git push origin main
+   ```
+
+3. **Acompanhe o deploy:** https://github.com/avilaops/ArcSat/actions
+
+📚 **Documentação Detalhada:**
+- [Guia de Deploy Completo](./DEPLOY.md)
+- [Setup Rápido](./QUICK-DEPLOY.md)
 
 ### Vercel (Frontend)
 
@@ -329,10 +350,23 @@ Este projeto é **PRIVADO** e de propriedade da **Ávila Inc**.
 
 ## 🔗 Links Úteis
 
-- [Documentação](./docs/index.html)
+### Documentação
+- [Documentação Geral](./docs/index.html)
 - [API Docs](./docs/api/)
-- [GitHub](https://github.com/avilaops/ArcSat)
+
+### Deploy & CI/CD
+- [⚡ Quick Start - Secrets Setup](./QUICK_SECRETS_SETUP.md) - Setup em 5 minutos
+- [🔐 Guia Completo de Secrets](./GITHUB_SECRETS_SETUP.md) - Configuração detalhada
+- [📋 Checklist de Setup](./SETUP_CHECKLIST.md) - Checklist passo a passo
+- [🔄 Fluxo de Deploy](./DEPLOY_WORKFLOW.md) - Diagrama e explicação
+- [🚀 Deploy Guide](./DEPLOY.md) - Guia de deploy completo
+- [⚡ Quick Deploy](./QUICK-DEPLOY.md) - Deploy rápido
+
+### Links Externos
+- [GitHub Repository](https://github.com/avilaops/ArcSat)
+- [GitHub Actions](https://github.com/avilaops/ArcSat/actions)
 - [Azure Portal](https://portal.azure.com)
+- [MongoDB Atlas](https://cloud.mongodb.com)
 
 ---
 
