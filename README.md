@@ -348,10 +348,23 @@ Este projeto é **PRIVADO** e de propriedade da **Ávila Inc**.
 
 ## 🔗 Links Úteis
 
-- [Documentação](./docs/index.html)
+### Documentação
+- [Documentação Geral](./docs/index.html)
 - [API Docs](./docs/api/)
-- [GitHub](https://github.com/avilaops/ArcSat)
+
+### Deploy & CI/CD
+- [⚡ Quick Start - Secrets Setup](./QUICK_SECRETS_SETUP.md) - Setup em 5 minutos
+- [🔐 Guia Completo de Secrets](./GITHUB_SECRETS_SETUP.md) - Configuração detalhada
+- [📋 Checklist de Setup](./SETUP_CHECKLIST.md) - Checklist passo a passo
+- [🔄 Fluxo de Deploy](./DEPLOY_WORKFLOW.md) - Diagrama e explicação
+- [🚀 Deploy Guide](./DEPLOY.md) - Guia de deploy completo
+- [⚡ Quick Deploy](./QUICK-DEPLOY.md) - Deploy rápido
+
+### Links Externos
+- [GitHub Repository](https://github.com/avilaops/ArcSat)
+- [GitHub Actions](https://github.com/avilaops/ArcSat/actions)
 - [Azure Portal](https://portal.azure.com)
+- [MongoDB Atlas](https://cloud.mongodb.com)
 
 ---
 
