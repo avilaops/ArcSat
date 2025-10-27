@@ -264,9 +264,28 @@ console.log(data.token); // JWT token
 
 ### Azure App Service
 
-1. Configure as variáveis de ambiente no Azure
-2. Configure CI/CD com GitHub Actions
-3. Deploy automático via push para `main`
+#### Setup Rápido (5 minutos):
+
+👉 **[Quick Start - Configurar GitHub Secrets](./QUICK_SECRETS_SETUP.md)**
+
+#### Passos:
+
+1. **Configure GitHub Secrets** - [Guia Completo](./GITHUB_SECRETS_SETUP.md)
+   - `AZURE_CREDENTIALS` - Credenciais do Azure
+   - `MONGO_ATLAS_URI` - Conexão MongoDB
+   - `JWT_SECRET` - Chave JWT
+   - `CLOUDFLARE_API_TOKEN` - Token Cloudflare
+   
+2. **Deploy automático via push para `main`**
+   ```bash
+   git push origin main
+   ```
+
+3. **Acompanhe o deploy:** https://github.com/avilaops/ArcSat/actions
+
+📚 **Documentação Detalhada:**
+- [Guia de Deploy Completo](./DEPLOY.md)
+- [Setup Rápido](./QUICK-DEPLOY.md)
 
 ### Vercel (Frontend)
 

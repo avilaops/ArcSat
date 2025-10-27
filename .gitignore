@@ -55,6 +55,11 @@ Thumbs.db
 # Azure
 .azure/
 
+# Credentials and Secrets (never commit these!)
+**/AZURE_CREDENTIALS_REFERENCE.md
+**/*credentials*.json
+**/*secrets*.json
+
 # Logs
 logs/
 *.log
