@@ -15,7 +15,8 @@ const userSchema = new mongoose.Schema({
     trim: true,
     validate: {
       validator: function(v) {
-        return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
+        // Simple email validation without ReDoS vulnerability
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
       },
       message: "Email inválido"
     }
@@ -52,7 +53,9 @@ const userSchema = new mongoose.Schema({
 userSchema.pre("save", async function(next) {
   if (!this.isModified("password")) return next();
   
-  this.password = await bcrypt.hash(this.password, 12);
+  // Use 10 rounds for good security/performance balance
+  const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS) || 10;
+  this.password = await bcrypt.hash(this.password, saltRounds);
   this.updatedAt = new Date();
   next();
 });
