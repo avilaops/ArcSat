@@ -1,6 +1,6 @@
 import express from "express";
 import axios from "axios";
-import { Company } from "../models/Company.js";
+import Company from "../models/Company.js";
 
 const router = express.Router();
 
