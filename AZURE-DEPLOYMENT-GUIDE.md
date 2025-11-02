@@ -58,7 +58,7 @@ az staticwebapp show \
   --query "defaultHostname" -o tsv
 ```
 
-Anote o hostname (será algo como `wonderful-sand-0adc5890f.3.azurestaticapps.net`)
+Anote o hostname (será algo como `YOUR-APP-NAME.azurestaticapps.net`)
 
 ### 1.4. Obter o Deployment Token
 
@@ -123,14 +123,14 @@ echo "Azure Hostname: $AZURE_HOSTNAME"
 ```
 Type: ALIAS
 Host: @
-Answer: wonderful-sand-0adc5890f.3.azurestaticapps.net
+Answer: YOUR-APP-NAME.azurestaticapps.net
 TTL: 600
 ```
 
 **Opção B: Usando A Record**
 ```bash
 # Obter o IP do Azure Static Web App
-nslookup wonderful-sand-0adc5890f.3.azurestaticapps.net
+nslookup YOUR-APP-NAME.azurestaticapps.net
 
 # Adicionar no Porkbun:
 Type: A
@@ -143,7 +143,7 @@ TTL: 600
 ```
 Type: CNAME
 Host: www
-Answer: wonderful-sand-0adc5890f.3.azurestaticapps.net
+Answer: YOUR-APP-NAME.azurestaticapps.net
 TTL: 600
 ```
 
@@ -228,7 +228,7 @@ az staticwebapp show \
 # Testar endpoints
 curl -I https://arcsat.com.br
 curl -I https://www.arcsat.com.br
-curl -I https://wonderful-sand-0adc5890f.3.azurestaticapps.net
+curl -I https://YOUR-APP-NAME.azurestaticapps.net
 ```
 
 ### 5.2. Verificar GitHub Actions

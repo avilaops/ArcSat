@@ -22,7 +22,7 @@ az staticwebapp list --output table
 az staticwebapp show --name <nome-do-seu-app> --resource-group <seu-resource-group> --query "defaultHostname" -o tsv
 ```
 
-O hostname será algo como: `wonderful-sand-0adc5890f.3.azurestaticapps.net`
+O hostname será algo como: `YOUR-APP-NAME.azurestaticapps.net`
 
 ### 2. Configurar DNS no Porkbun
 
@@ -36,7 +36,7 @@ Se o Porkbun suportar registros ALIAS ou ANAME:
 ```
 Tipo: ALIAS
 Host: @
-Resposta: wonderful-sand-0adc5890f.3.azurestaticapps.net
+Resposta: YOUR-APP-NAME.azurestaticapps.net
 TTL: 600 (ou padrão)
 ```
 
@@ -45,7 +45,7 @@ Se ALIAS não estiver disponível, você precisará do IP do Azure Static Web Ap
 
 ```bash
 # Obter o IP do Azure Static Web App
-nslookup wonderful-sand-0adc5890f.3.azurestaticapps.net
+nslookup YOUR-APP-NAME.azurestaticapps.net
 ```
 
 ```
@@ -60,7 +60,7 @@ TTL: 600
 ```
 Tipo: CNAME
 Host: www
-Resposta: wonderful-sand-0adc5890f.3.azurestaticapps.net
+Resposta: YOUR-APP-NAME.azurestaticapps.net
 TTL: 600
 ```
 
@@ -72,7 +72,7 @@ Se você tiver outros subdomínios:
 # App/Dashboard
 Tipo: CNAME
 Host: app
-Resposta: wonderful-sand-0adc5890f.3.azurestaticapps.net
+Resposta: YOUR-APP-NAME.azurestaticapps.net
 TTL: 600
 
 # API (se necessário separadamente)
@@ -147,8 +147,8 @@ az staticwebapp hostname show \
 | Tipo | Host | Resposta | TTL | Propósito |
 |------|------|----------|-----|-----------|
 | ALIAS/A | @ | [Azure hostname/IP] | 600 | Domínio principal |
-| CNAME | www | wonderful-sand-0adc5890f.3.azurestaticapps.net | 600 | Redirecionamento WWW |
-| CNAME | app | wonderful-sand-0adc5890f.3.azurestaticapps.net | 600 | Dashboard (opcional) |
+| CNAME | www | YOUR-APP-NAME.azurestaticapps.net | 600 | Redirecionamento WWW |
+| CNAME | app | YOUR-APP-NAME.azurestaticapps.net | 600 | Dashboard (opcional) |
 | TXT | @ | [Valor de validação do Azure] | 600 | Validação de domínio |
 
 ## ⏱️ Tempo de Propagação
