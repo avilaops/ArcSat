@@ -105,7 +105,7 @@ cd frontend/arcsat-landing
 npm run dev
 ```
 
-## 🏗️ Build de Produção
+## 🏗️ Build e Deploy de Produção
 
 ### Build do Backend
 
@@ -123,6 +123,22 @@ npm start
 cd frontend/arcsat-landing
 npm run build
 npm start
+```
+
+### Deploy no Azure (Frontend)
+
+```bash
+cd frontend/arcsat-landing
+npm run build
+az staticwebapp deploy --name arcsat-frontend --resource-group Avila --source . --location eastus2
+```
+
+### Deploy no Azure (Backend)
+
+```bash
+cd src
+npm run build
+az webapp up --name arcsat-api --resource-group Avila --runtime "NODE|20-lts" --location eastus2
 ```
 
 ## 🐳 MongoDB Setup
