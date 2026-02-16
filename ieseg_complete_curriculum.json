@@ -1,0 +1,732 @@
+{
+  "institution": "IÉSEG School of Management",
+  "program_name": "Grande École Program",
+  "duration": "5 years",
+  "total_ects": 300,
+  "degree_awarded": "Master in Management",
+  "languages": [
+    "English",
+    "French"
+  ],
+  "campuses": [
+    "Lille",
+    "Paris La Défense"
+  ],
+  "accreditations": [
+    "EQUIS",
+    "AACSB",
+    "AMBA",
+    "CGE",
+    "EESPIG"
+  ],
+  "program_structure": {
+    "bachelor_cycle": {
+      "duration": "3 years",
+      "ects": 180,
+      "objective": "Acquire solid knowledge in management fundamentals and develop intercultural skills",
+      "structure": "6 semesters",
+      "semesters": {
+        "semester_1": {
+          "name": "Learning & Working with a Professional Mindset",
+          "ects": 30,
+          "focus": "Introduction to business fundamentals and professional development",
+          "key_components": [
+            "Investigating Business (Interdisciplinary Project)",
+            "Introduction to Management",
+            "Microeconomics",
+            "Business Law",
+            "Business Communication",
+            "Quantitative Methods",
+            "Personal Development",
+            "Language Courses (French/German/Spanish/Italian)"
+          ],
+          "skills_developed": [
+            "Professional mindset",
+            "Business analysis",
+            "Communication skills",
+            "Teamwork"
+          ]
+        },
+        "semester_2": {
+          "name": "Exploring Diversity",
+          "ects": 30,
+          "focus": "Understanding cultural diversity and international business environment",
+          "key_components": [
+            "Solidarity Project (Interdisciplinary Project)",
+            "Organizational Behavior",
+            "Macroeconomics",
+            "Corporate Finance",
+            "Marketing Fundamentals",
+            "Statistics",
+            "Intercultural Management",
+            "Geopolitics",
+            "Language Courses"
+          ],
+          "skills_developed": [
+            "Cultural awareness",
+            "Social responsibility",
+            "Analytical thinking",
+            "Global perspective"
+          ]
+        },
+        "semester_3": {
+          "name": "Developing Creativity & Innovation",
+          "ects": 30,
+          "focus": "Innovation, creativity, and digital transformation",
+          "key_components": [
+            "Innovation Consulting Project (Interdisciplinary Project)",
+            "Entrepreneurship",
+            "Digital Transformation",
+            "Algorithmic Logic & Coding",
+            "UX/UI Design (Le Wagon Partnership)",
+            "Data Processing",
+            "Artificial Intelligence Fundamentals",
+            "Sustainable Development",
+            "Language Courses"
+          ],
+          "skills_developed": [
+            "Creative thinking",
+            "Innovation management",
+            "Digital literacy",
+            "Problem-solving"
+          ]
+        },
+        "semester_4": {
+          "name": "Applying Learning to the Reality of the Corporate World",
+          "ects": 30,
+          "focus": "Practical application through corporate internship",
+          "key_components": [
+            "Sales Internship (2-3 months minimum)",
+            "Applied Management Project",
+            "Operations Management",
+            "Supply Chain Management",
+            "Financial Analysis",
+            "Human Resources Management",
+            "Business Ethics",
+            "Language Courses"
+          ],
+          "skills_developed": [
+            "Professional experience",
+            "Sales techniques",
+            "Corporate understanding",
+            "Work ethics"
+          ]
+        },
+        "semester_5": {
+          "name": "Deploying a Spirit of Entrepreneurship in a Digitalized World",
+          "ects": 30,
+          "focus": "Entrepreneurial mindset and digital business models",
+          "key_components": [
+            "Entrepreneurship Project (Interdisciplinary Project)",
+            "Business Model Innovation",
+            "Data Science (Le Wagon Partnership)",
+            "Web Development",
+            "Digital Marketing",
+            "E-Commerce",
+            "Corporate Social Responsibility",
+            "Change Management",
+            "Language Courses"
+          ],
+          "skills_developed": [
+            "Entrepreneurial spirit",
+            "Digital strategy",
+            "Data analytics",
+            "Business creation"
+          ]
+        },
+        "semester_6": {
+          "name": "Acquiring a Holistic International Experience",
+          "ects": 30,
+          "focus": "International exchange or professional experience abroad",
+          "options": [
+            "University Exchange at Partner Institution",
+            "Professional Internship (3-6 months)",
+            "International Project",
+            "Double Degree Program"
+          ],
+          "partner_universities": [
+            "Universidad del Rosario (Colombia)",
+            "Pforzheim University (Germany)",
+            "Universitat Politècnica de València (Spain)",
+            "Fairleigh Dickinson University (USA)",
+            "Juniata College (USA)"
+          ],
+          "skills_developed": [
+            "International exposure",
+            "Cross-cultural competence",
+            "Adaptability",
+            "Global networking"
+          ]
+        }
+      },
+      "internships": [
+        {
+          "name": "Social and Professional Internship",
+          "timing": "After Year 1",
+          "duration": "1-2 months minimum",
+          "objective": "First professional experience and social responsibility"
+        },
+        {
+          "name": "Sales Internship",
+          "timing": "After Year 2",
+          "duration": "2-3 months minimum",
+          "objective": "Develop commercial skills and customer relations"
+        },
+        {
+          "name": "Professional Internship",
+          "timing": "After Year 3",
+          "duration": "3-6 months",
+          "objective": "In-depth professional experience in chosen field"
+        }
+      ],
+      "language_requirements": {
+        "compulsory_language": "French (for non-French speakers) OR German/Spanish/Italian",
+        "optional_second_language": [
+          "German",
+          "Spanish",
+          "Italian",
+          "Mandarin",
+          "Portuguese",
+          "Arabic",
+          "Russian",
+          "Japanese"
+        ],
+        "e_learning": "Available for all languages"
+      },
+      "special_programs": [
+        "Excellence Program (for top students aiming at Harvard, Oxford, MIT, etc.)",
+        "Artist Status",
+        "Entrepreneur Status",
+        "High-Level Athlete Status",
+        "Reservist Status"
+      ]
+    },
+    "master_cycle": {
+      "duration": "2 years",
+      "ects": 120,
+      "objective": "Develop expertise and leadership skills for professional career",
+      "structure": "4 semesters (3 teaching + 1 internship)",
+      "core_courses": {
+        "description": "Mandatory courses for all Master students",
+        "courses": [
+          {
+            "name": "Positive Leadership",
+            "focus": "Leadership development and team management"
+          },
+          {
+            "name": "Managing Diversity in Vivo",
+            "focus": "Practical management experience with Bachelor students"
+          },
+          {
+            "name": "Artificial Intelligence for Business",
+            "focus": "AI applications in management"
+          },
+          {
+            "name": "Data Visualization",
+            "focus": "Data analysis and presentation"
+          },
+          {
+            "name": "Corporate Social Responsibility",
+            "focus": "Sustainable business practices"
+          },
+          {
+            "name": "Change Management",
+            "focus": "Managing organizational transformation"
+          },
+          {
+            "name": "Business Ethics",
+            "focus": "Ethical decision-making in business"
+          },
+          {
+            "name": "Strategic Management",
+            "focus": "Corporate strategy and competitive analysis"
+          }
+        ]
+      },
+      "majors": {
+        "description": "Studied in Semester 1 - Choose 1 major (30-40 ECTS)",
+        "available_majors": [
+          {
+            "name": "Finance",
+            "courses": [
+              "Corporate Finance Advanced",
+              "Financial Markets & Instruments",
+              "Investment Banking",
+              "Portfolio Management",
+              "Risk Management",
+              "Mergers & Acquisitions",
+              "Financial Modeling",
+              "Derivatives & Options"
+            ],
+            "career_paths": [
+              "Financial Analyst",
+              "Investment Banker",
+              "Portfolio Manager",
+              "Risk Manager"
+            ]
+          },
+          {
+            "name": "Marketing",
+            "courses": [
+              "Strategic Marketing",
+              "Consumer Behavior",
+              "Brand Management",
+              "Digital Marketing Strategy",
+              "Marketing Analytics",
+              "Product Management",
+              "Marketing Research",
+              "Omnichannel Marketing"
+            ],
+            "career_paths": [
+              "Marketing Manager",
+              "Brand Manager",
+              "Product Manager",
+              "Digital Marketing Specialist"
+            ]
+          },
+          {
+            "name": "International Business",
+            "courses": [
+              "Global Strategy",
+              "International Trade",
+              "Cross-Cultural Management",
+              "International Negotiations",
+              "Global Supply Chain",
+              "Emerging Markets",
+              "International Business Law",
+              "Export Management"
+            ],
+            "career_paths": [
+              "International Business Developer",
+              "Export Manager",
+              "Global Strategy Consultant",
+              "International Trade Specialist"
+            ]
+          },
+          {
+            "name": "Accounting & Control",
+            "courses": [
+              "Advanced Financial Accounting",
+              "Management Accounting",
+              "Auditing Standards & Practices",
+              "Financial Reporting",
+              "Internal Control Systems",
+              "Tax Strategy",
+              "Forensic Accounting",
+              "International Accounting Standards"
+            ],
+            "career_paths": [
+              "Financial Controller",
+              "Auditor",
+              "Management Accountant",
+              "Tax Consultant"
+            ]
+          },
+          {
+            "name": "Information Systems & Digital Transformation",
+            "courses": [
+              "Information Systems Management",
+              "Digital Business Models",
+              "IT Strategy",
+              "Cybersecurity Management",
+              "Data Analytics & Big Data",
+              "Cloud Computing",
+              "Digital Innovation",
+              "Business Process Management"
+            ],
+            "career_paths": [
+              "IT Manager",
+              "Digital Transformation Consultant",
+              "Data Analyst",
+              "IT Project Manager"
+            ]
+          },
+          {
+            "name": "Human Resources & Organization",
+            "courses": [
+              "Strategic HRM",
+              "Talent Management",
+              "Organizational Development",
+              "Compensation & Benefits",
+              "Labor Relations",
+              "HR Analytics",
+              "Change & Culture Management",
+              "Recruitment & Selection"
+            ],
+            "career_paths": [
+              "HR Manager",
+              "Talent Acquisition Specialist",
+              "Organizational Development Consultant",
+              "HR Business Partner"
+            ]
+          },
+          {
+            "name": "Operations & Supply Chain Management",
+            "courses": [
+              "Operations Strategy",
+              "Supply Chain Design",
+              "Logistics Management",
+              "Quality Management",
+              "Lean Management",
+              "Procurement Strategy",
+              "Operations Analytics",
+              "Project Management"
+            ],
+            "career_paths": [
+              "Operations Manager",
+              "Supply Chain Manager",
+              "Logistics Coordinator",
+              "Operations Consultant"
+            ]
+          }
+        ]
+      },
+      "specializations": {
+        "description": "Studied in Semester 2 - Deepens the major chosen",
+        "note": "Each major has specific specialization courses that provide advanced knowledge"
+      },
+      "minors": {
+        "description": "Studied in Semester 3 - Choose from different discipline than major",
+        "available_minors": [
+          {
+            "name": "Finance",
+            "courses": [
+              "Financial Analysis",
+              "Investment Strategies",
+              "Financial Risk Management"
+            ]
+          },
+          {
+            "name": "Marketing & Sales",
+            "courses": [
+              "Sales Management",
+              "Customer Relationship Management",
+              "Marketing Communications"
+            ]
+          },
+          {
+            "name": "Entrepreneurship & Innovation",
+            "courses": [
+              "Business Creation",
+              "Innovation Management",
+              "Startup Financing"
+            ]
+          },
+          {
+            "name": "Consulting & Strategy",
+            "courses": [
+              "Management Consulting",
+              "Strategic Analysis",
+              "Business Diagnostics"
+            ]
+          },
+          {
+            "name": "International Management",
+            "courses": [
+              "International Business Development",
+              "Export Strategies",
+              "Global Markets"
+            ]
+          },
+          {
+            "name": "Sustainability & CSR",
+            "courses": [
+              "Sustainable Business Models",
+              "Environmental Management",
+              "Social Impact Assessment"
+            ]
+          },
+          {
+            "name": "Data Analytics",
+            "courses": [
+              "Business Intelligence",
+              "Predictive Analytics",
+              "Data-Driven Decision Making"
+            ]
+          }
+        ]
+      },
+      "specific_tracks": [
+        {
+          "name": "Entrepreneurship Track",
+          "description": "For students developing their own business",
+          "components": [
+            "Business Plan Development",
+            "Startup Management",
+            "Innovation Lab",
+            "Funding Strategies",
+            "Mentoring by Entrepreneurs"
+          ]
+        },
+        {
+          "name": "Audit Track",
+          "description": "Prepares for audit profession and certifications",
+          "components": [
+            "Audit Methodology",
+            "Internal Audit",
+            "External Audit",
+            "Fraud Detection",
+            "Audit Standards (IFRS, GAAP)"
+          ]
+        }
+      ],
+      "thesis_project": {
+        "type": "Professional Thesis or Consulting Project",
+        "duration": "Throughout Master 2",
+        "options": [
+          {
+            "name": "Professional Thesis",
+            "description": "Research-based thesis on business topic"
+          },
+          {
+            "name": "Consulting Project",
+            "description": "Real consulting mission for a company"
+          },
+          {
+            "name": "Entrepreneurial Project",
+            "description": "Business creation project with implementation plan"
+          }
+        ]
+      },
+      "executive_internship": {
+        "timing": "Semester 4 (Final semester)",
+        "duration": "6 months minimum",
+        "objective": "End-of-studies internship in management position",
+        "requirements": [
+          "Autonomous responsibilities",
+          "Management or strategic role",
+          "Written report",
+          "Oral defense"
+        ]
+      },
+      "international_options": {
+        "semester_3_alternatives": [
+          "Exchange Semester at Partner University (342 partners worldwide)",
+          "Double Degree Program",
+          "Continue at IÉSEG with Minor"
+        ],
+        "dual_degree_partners": [
+          "Queensland University of Technology (Australia)",
+          "HEC Montreal (Canada)",
+          "McGill University (Canada)",
+          "Tongji University (China)",
+          "University of Vaasa (Finland)",
+          "Università Carlo Cattaneo LIUC (Italy)",
+          "Rikkyo University (Japan)",
+          "National Chengchi University (Taiwan)",
+          "Lancaster University (UK)",
+          "Centre Franco-Vietnamien (Vietnam)"
+        ]
+      },
+      "double_degrees": {
+        "specialized_masters": [
+          "Fashion Management",
+          "Strategy & Digital Transformation",
+          "Finance",
+          "International Accounting, Audit & Control",
+          "Digital Marketing & Customer Experience Management",
+          "AI & Data Analytics for Business",
+          "Business Analysis & Consulting",
+          "Cybersecurity Management",
+          "Management for Sustainability"
+        ],
+        "interdisciplinary_france": [
+          {
+            "partner": "CentraleSupélec",
+            "programs": [
+              "Master of Science & Technology for Business Managers",
+              "Master Global Risk Management",
+              "Mastère Spécialisé® Management Industriel & Supply Chain",
+              "Mastère Spécialisé® Innovation et Transformation"
+            ]
+          },
+          {
+            "partner": "EFREI",
+            "programs": [
+              "Cybersécurité et Gouvernance",
+              "IT for Finance",
+              "Information Systems Strategy & Governance",
+              "Business Intelligence and Analytics",
+              "Data Engineering"
+            ]
+          }
+        ]
+      },
+      "career_support": {
+        "career_bootcamp": {
+          "duration": "2 days",
+          "activities": [
+            "Career Workshops",
+            "Master Classes",
+            "Company Meetings",
+            "Job Market Presentations",
+            "Networking Sessions",
+            "Soft Skills Development"
+          ]
+        },
+        "career_services": [
+          "Personalized Coaching",
+          "CV & Interview Preparation",
+          "Job Board Access",
+          "Alumni Network (IÉSEG Network)",
+          "Company Partnerships (2,500+ partners)"
+        ]
+      }
+    }
+  },
+  "bachelor_in_international_business": {
+    "program_name": "Bachelor in International Business (BIB)",
+    "duration": "3 years (or 4 years with double degree)",
+    "ects": 180,
+    "language": "100% English",
+    "degree": "Bachelor in International Business / DESAI",
+    "accreditations": [
+      "VISA BAC+3",
+      "Grade de Licence",
+      "AACSB"
+    ],
+    "structure": {
+      "year_1": {
+        "focus": "Management Fundamentals",
+        "courses": [
+          "Introduction to Business",
+          "Principles of Management",
+          "Microeconomics",
+          "Macroeconomics",
+          "Financial Accounting",
+          "Marketing Principles",
+          "Business Statistics",
+          "Business Law",
+          "Communication Skills",
+          "Personal Development"
+        ]
+      },
+      "year_2": {
+        "focus": "Specialized Business Topics",
+        "courses": [
+          "International Business",
+          "Organizational Behavior",
+          "Corporate Finance",
+          "Operations Management",
+          "Digital Marketing",
+          "Business Analytics",
+          "Cross-Cultural Management",
+          "Strategic Management",
+          "Entrepreneurship",
+          "Supply Chain Management"
+        ]
+      },
+      "year_3": {
+        "focus": "Specialization & Capstone",
+        "options": [
+          "Standard Path (enter job market)",
+          "Apprenticeship Path (work-study program)",
+          "Continue to Grande École Master",
+          "Continue to Specialized Master"
+        ],
+        "courses": [
+          "Advanced International Business",
+          "Business Ethics & CSR",
+          "Innovation Management",
+          "Capstone Project",
+          "Industry Specialization Electives"
+        ]
+      }
+    },
+    "specialization_areas": [
+      "International Marketing",
+      "Finance",
+      "Digital Business",
+      "Luxury & Fashion",
+      "Sustainability"
+    ],
+    "internships": [
+      {
+        "timing": "After Year 1",
+        "duration": "2-3 months",
+        "type": "Discovery internship"
+      },
+      {
+        "timing": "After Year 2",
+        "duration": "3-4 months",
+        "type": "Professional internship"
+      },
+      {
+        "timing": "After Year 3",
+        "duration": "3-6 months",
+        "type": "Specialization internship"
+      }
+    ],
+    "international_experience": "Mandatory",
+    "international_options": [
+      "One semester exchange at partner university",
+      "Internship abroad",
+      "Gap year abroad",
+      "Triple Degree programs"
+    ],
+    "triple_degree_options": [
+      {
+        "name": "European Business Bachelor",
+        "partners": [
+          "IÉSEG (France)",
+          "Sheffield Business School (UK)",
+          "IQS School of Management (Spain)"
+        ],
+        "duration": "4 years",
+        "outcome": "3 Bachelor degrees"
+      },
+      {
+        "name": "International Triple Bachelor in Business",
+        "partners": [
+          "Rabat Business School (Morocco)",
+          "IÉSEG (France)",
+          "HEC Montréal (Canada)"
+        ],
+        "duration": "4 years",
+        "outcome": "3 Bachelor degrees"
+      }
+    ]
+  },
+  "pedagogy": {
+    "teaching_methods": [
+      "Case Studies",
+      "Interdisciplinary Projects",
+      "Business Simulations",
+      "Company Visits",
+      "Guest Lectures",
+      "Group Work",
+      "Interactive Learning",
+      "Flipped Classroom"
+    ],
+    "learning_by_doing": "All semesters include practical projects",
+    "partnerships": [
+      {
+        "partner": "Le Wagon",
+        "focus": "Web development, UX/UI Design, Data Science"
+      }
+    ]
+  },
+  "career_outcomes": {
+    "employment_rate": "95% within 4 months of graduation",
+    "average_salary": "€51,825 per year (including bonuses)",
+    "international_careers": "21% start career abroad",
+    "csr_related_jobs": "35% have CSR-related positions",
+    "top_sectors": [
+      "Consulting",
+      "Finance & Banking",
+      "Technology",
+      "Marketing & Communications",
+      "Luxury & Retail",
+      "Supply Chain & Logistics",
+      "Startups & Entrepreneurship"
+    ],
+    "top_employers": [
+      "Big 4 Consulting Firms",
+      "Investment Banks",
+      "Tech Companies",
+      "FMCG Companies",
+      "Luxury Brands",
+      "Own Startups"
+    ]
+  }
+}

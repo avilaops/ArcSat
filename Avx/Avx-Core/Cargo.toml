@@ -1,0 +1,287 @@
+﻿[workspace]
+resolver = "2"
+
+exclude = [
+    "Clientes/*",
+]
+
+members = [
+    # === CORE FOUNDATION (na raiz) ===
+    "avx-nucleus",
+    "avx-primitives",
+    "avx-alloc",
+    "avx-std",
+    "avx-error",
+    "avx-buffer",
+    "avx-time",
+    "avx-sync",
+    "avx-id",
+
+    # === GAME ENGINE ===
+    "avx-engine-core",
+
+    # === CRYPTO & SECURITY ===
+    "categories/crypto-security/avx-aead",
+    "categories/crypto-security/avx-crypto",
+    "categories/crypto-security/avx-hash",
+    "categories/crypto-security/avx-mac",
+    "categories/crypto-security/avx-kdf",
+    "categories/crypto-security/avx-signature",
+    "categories/crypto-security/avx-pki",
+    "categories/crypto-security/avx-post-quantum",
+    "categories/crypto-security/avx-mpc",
+    "categories/crypto-security/avx-threshold",
+    "categories/crypto-security/avx-zkp",
+    "categories/crypto-security/avx-stealth",
+    "categories/crypto-security/avx-onion-routing",
+    # Temporário: avx-secrets comentado por dependência quebrada
+    # "categories/crypto-security/avx-secrets",
+    "categories/crypto-security/avx-quantum",
+
+    # === NETWORK & COMMUNICATION ===
+    "categories/network/avx-http",
+    "categories/network/avx-grpc",
+    "categories/network/avx-quic",
+    # "categories/network/avx-quinn", # Missing Cargo.toml
+    "categories/network/avx-tcp",
+    "categories/network/avx-udp",
+    "categories/network/avx-tls",
+    "categories/network/avx-dns",
+    "categories/network/avx-websocket",
+    "categories/network/avx-proxy",
+    "categories/network/avx-gateway",
+    "categories/network/avx-loadbalancer",
+    "categories/network/avx-molecule",
+    "categories/network/avx-webrtc",      # NEW: WebRTC (STUN/TURN/ICE)
+    "categories/network/avx-mqtt",        # NEW: MQTT 3.1.1/5.0 broker & client
+
+    # === DISTRIBUTED SYSTEMS ===
+    # "categories/distributed/avx-distributed-system",
+    "categories/distributed/avx-raft",
+    "categories/distributed/avx-gossip",
+    "categories/distributed/avx-election",
+    "categories/distributed/avx-replication",
+    "categories/distributed/avx-shard",
+    "categories/distributed/avx-partition",
+    "categories/distributed/avx-coordinator",
+    "categories/distributed/avx-orchestrator",
+    "categories/distributed/avx-service-mesh",
+    "categories/distributed/avx-crdt",
+    "categories/distributed/avx-lease",
+    "categories/distributed/avx-lock",
+
+    # === DATABASE & STORAGE ===
+    "categories/database/avx-db",
+    "categories/database/avx-storage",
+    "categories/database/avx-cache",
+    "categories/database/avx-pool",
+    "categories/database/avx-serde",
+    "categories/database/avx-serde-old",
+    "categories/database/avx-serialize",
+    "categories/database/avx-codec",
+    "categories/database/avx-compress",
+
+    # === AI & MACHINE LEARNING ===
+    "categories/ai-ml/avx-ml",
+    "categories/ai-ml/avx-intelligence",
+    "categories/ai-ml/avx-copilot-ai",
+    "categories/ai-ml/avx-copilot-context",
+    "categories/ai-ml/avx-copilot-lsp",
+    "categories/ai-ml/avx-copilot-model-storage",
+    "categories/ai-ml/avx-copilot-tokenizer",
+    "categories/ai-ml/avx-tokenizer",
+    "categories/ai-ml/avx-synth",
+
+    # === MATHEMATICS ===
+    "categories/math/avx-math",
+    "categories/math/avx-linalg",
+    "categories/math/avx-numeric",
+    "categories/math/avx-ndarray",
+    "categories/math/avx-dataframe",
+    "categories/math/avx-fft",
+    "categories/math/avx-complex",
+    "categories/math/avx-bignum",
+    "categories/math/avx-curve",
+    "categories/math/avx-finite-fields",
+    "categories/math/avx-prime",
+    "categories/math/avx-rand",
+    "categories/math/avx-rand-simple",
+    "categories/math/avx-random",
+    "categories/math/avx-rayon-simple",
+    "categories/math/avx-reduction",
+
+    # === GPU & PARALLEL COMPUTING ===
+    # Temporário: avx-gpu comentado por ter workspace aninhado
+    # "categories/gpu/avx-gpu",
+    "categories/gpu/avx-gpu-core",
+    "categories/gpu/avx-gpu-backends",
+    "categories/gpu/avx-gpu-compiler",
+    "categories/gpu/avx-gpu-runtime",
+    # "categories/gpu/avx-gpu-std",  # Dependency issue - commented temporarily
+    "categories/gpu/avx-gpu-macros",
+    "categories/gpu/avx-cuda",
+    "categories/gpu/avx-parallel",
+    "categories/gpu/avx-async",
+    "categories/gpu/avx-conv1d",
+    "categories/gpu/avx-conv2d",
+    "categories/gpu/avx-conv3d",
+    "categories/gpu/avx-conv4d",
+
+    # === RENDERING & GRAPHICS ===
+    "categories/rendering/avx-quantum-render",
+    "categories/rendering/avx-render",
+    "categories/rendering/avx-scene",
+
+    # === WEB & FRONTEND ===
+    "categories/web/avx-web",
+    "categories/web/avx-webframework",
+    "categories/web/avx-frontend",
+    "categories/web/avx-browser",
+    "categories/web/avx-framework",
+    "categories/web/avx-vizzio",
+
+    # === GIS & ENGINEERING ===
+    "categories/gis/avx-geo",
+    "categories/gis/avx-gis-desktop",
+    "categories/gis/avx-gis-cli",
+    "categories/gis/avx-location",
+    "categories/gis/avx-ifc",
+    "categories/gis/avx-ifc-ffi",
+    "categories/gis/avx-ifc-geom",
+    "categories/gis/avx-ifc-normalize",
+    # "categories/gis/avx-bim",
+    "categories/gis/avx-gltf",
+    "categories/gis/avx-eng-reverse",
+
+    # === VISUALIZATION ===
+    "categories/visualization/avx-image",
+    "categories/visualization/avx-arrow",
+    "categories/visualization/avx-viz",
+
+    # === EMAIL SYSTEM ===
+    "categories/email/avx-cell",
+    "categories/email/avx-cell-core",
+    "categories/email/avx-tissue",
+    "categories/email/avx-organ",
+    "categories/email/avx-organism",
+
+    # === OBSERVABILITY ===
+    "categories/observability/avx-observability",
+    "categories/observability/avx-metrics",
+    "categories/observability/avx-telemetry",
+    "categories/observability/avx-tracing",
+    "categories/observability/avx-monitor",
+    "categories/observability/avx-log",
+    "categories/observability/avx-logger",
+    "categories/observability/avx-alert",
+    "categories/database/avx-tracing",
+
+    # === CORE UTILITIES ===
+    "categories/core-utils/avx-error",
+    "categories/core-utils/avx-error-old",
+    "categories/core-utils/avx-errors-derive",
+    "categories/core-utils/avx-events",
+    "categories/core-utils/avx-queue",
+    "categories/core-utils/avx-buffer",
+    "categories/core-utils/avx-sync",
+    "categories/core-utils/avx-runtime",
+    "categories/core-utils/avx-future",
+    "categories/core-utils/avx-time",
+    "categories/core-utils/avx-id",
+    "categories/core-utils/avx-regex",
+    "categories/core-utils/avx-validate",
+    "categories/core-utils/avx-config",
+    "categories/core-utils/avx-atom",
+
+    # === CLI & TERMINAL ===
+    "categories/cli/avx-cli",
+    "categories/cli/avx-terminal",
+    "categories/cli/avx-term",
+    "categories/cli/avx-console",
+
+    # === AUTHENTICATION ===
+    "categories/auth/avx-auth",
+    "categories/auth/avx-jwt",
+    "categories/auth/avx-oauth",
+
+    # === BUSINESS & APPLICATIONS ===
+    "categories/business/avx-hotelaria",
+
+    # === ARCHITECTURE ===
+    "categories/architecture/avx-modular",
+    "categories/architecture/avx-workflow",
+    # Temporário: avx-remote comentado por ter workspace aninhado  
+    # "categories/architecture/avx-remote",
+    "categories/architecture/avx-mcp",
+    "categories/architecture/avx-api-core",
+
+    # === CLOUD & PLATFORM ===
+    "categories/cloud/avx-cloud-platform",
+    "categories/cloud/avx-clustering",
+
+    # === VIRTUALIZATION ===
+    "categories/virtualization/avx-vm",       # NEW: Virtual Machine Engine
+
+    # === CONTAINERS & ORCHESTRATION ===
+    "categories/containers/avx-container-common",
+    "categories/containers/avx-container-image",
+    "categories/containers/avx-container-runtime",
+    "categories/containers/avx-container-network",
+    "categories/containers/avx-container-storage",
+    "categories/containers/avx-container-security",
+    "categories/containers/avx-container-monitor",
+    "categories/containers/avx-container-cli",
+    # "categories/orchestration/avx-k8s-apiserver",
+    # "categories/orchestration/avx-k8s-controller",
+    # "categories/orchestration/avx-k8s-scheduler",
+    # "categories/orchestration/avx-k8s-kubelet",
+    # "categories/orchestration/avx-k8s-proxy",
+    # "categories/orchestration/avx-k8s-etcd",
+    # "categories/orchestration/avx-k8s-cni",
+    # "categories/orchestration/avx-k8s-csi",
+    # "categories/orchestration/avx-k8s-ingress",
+    # "categories/orchestration/avx-k8s-operator",
+
+    # === WORKSPACES & SPECIAL ===
+    # Temporário: workspaces comentados
+    # "avx-core-workspace",
+    # "avx-ai-workspace",
+    # "avx-geo-workspace",
+    # "avx-arxis",
+    # "avx-tests",
+    # "avx-tools",
+    # "avx-examples",
+    # "avx-docs-site",
+    "arxis-analytics-server",
+]
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+authors = ["Nícolas Ávila <nicolas@avila.inc>", "avx Development Team <dev@avila.inc>"]
+license = "MIT OR Apache-2.0"
+homepage = "https://avila.inc"
+repository = "https://github.com/avilaops/arxis-core"
+documentation = "https://docs.rs/avx"
+
+[workspace.dependencies]
+avx-error = { path = "avx-error", version = "0.2.0" }
+avx-alloc = { path = "avx-alloc", version = "0.1.0" }
+avx-std = { path = "avx-std", version = "0.1.0" }
+avx-primitives = { path = "avx-primitives", version = "0.1.0" }
+avx-sync = { path = "avx-sync", version = "0.1.0" }
+avx-time = { path = "avx-time", version = "0.1.0" }
+avx-buffer = { path = "avx-buffer", version = "0.1.0" }
+avx-serde = { path = "categories/database/avx-serde", version = "0.2.0" }
+avx-http = { path = "categories/network/avx-http", version = "0.1.0" }
+avx-hash = { path = "categories/crypto-security/avx-hash", version = "0.1.0" }
+avx-compress = { path = "categories/database/avx-compress", version = "0.3.0" }
+avx-gpu-core = { path = "categories/gpu/avx-gpu/avx-gpu-core", version = "0.1.0" }
+avx-ecs = { path = "avx-engine/avx-ecs", version = "0.1.0" }
+avx-render = { path = "categories/rendering/avx-render", version = "0.1.0" }
+avx-scene = { path = "categories/rendering/avx-scene", version = "0.1.0" }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1

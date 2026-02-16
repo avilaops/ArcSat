@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IÉSEG Course Explorer - Plan Your Academic Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .controls {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .filter-section {
+            margin-bottom: 20px;
+        }
+
+        .filter-section label {
+            display: block;
+            font-weight: 600;
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .filter-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .my-plan {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .my-plan h3 {
+            font-size: 1.3em;
+        }
+
+        .plan-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .view-plan-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .view-plan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .course-card.selected {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .course-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #1e3c72;
+            flex: 1;
+        }
+
+        .add-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
+
+        .add-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .add-btn.added {
+            background: #4CAF50;
+            border-color: #4CAF50;
+            color: white;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .meta-tag {
+            background: #e7e9fc;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .course-description {
+            color: #6c757d;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .course-topics {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .course-topics h5 {
+            color: #495057;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .topic-tag {
+            display: inline-block;
+            background: #f8f9fa;
+            color: #495057;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin: 3px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .detail-section {
+            margin-bottom: 25px;
+        }
+
+        .detail-section h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .detail-section p, .detail-section li {
+            color: #495057;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .detail-section ul {
+            padding-left: 25px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px;
+            border-top: 2px solid #f1f3f5;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9ff;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+            transition: right 0.3s;
+            z-index: 999;
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 25px;
+        }
+
+        .sidebar-content {
+            padding: 25px;
+        }
+
+        .planned-course {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .planned-course h4 {
+            color: #1e3c72;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .remove-course {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #dc3545;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .category-divider {
+            color: #667eea;
+            font-weight: 600;
+            margin: 25px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎓 IÉSEG Course Explorer</h1>
+        <p>Explore courses, build your academic plan, and make informed decisions</p>
+    </div>
+
+    <div class="container">
+        <div class="my-plan">
+            <div>
+                <h3>📚 My Academic Plan</h3>
+                <p>Track and organize your course selections</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="plan-badge">
+                    <span id="plan-count">0</span> courses selected
+                </div>
+                <button class="view-plan-btn" onclick="toggleSidebar()">View My Plan →</button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-section">
+                <label>🔍 Search Courses</label>
+                <input type="text" class="search-box" id="search-box" placeholder="Search by course name, topic, or keyword...">
+            </div>
+
+            <div class="filter-section">
+                <label>📊 Filter by Cycle</label>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all" onclick="filterCycle('all')">All Courses</button>
+                    <button class="filter-btn" data-filter="bachelor" onclick="filterCycle('bachelor')">Bachelor Cycle</button>
+                    <button class="filter-btn" data-filter="master" onclick="filterCycle('master')">Master Cycle</button>
+                    <button class="filter-btn" data-filter="core" onclick="filterCycle('core')">Core Courses</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <label>🎯 Filter by Area</label>
+                <div class="filter-buttons" id="area-filters"></div>
+            </div>
+        </div>
+
+        <div class="courses-grid" id="courses-grid"></div>
+        
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <h3>No courses found</h3>
+            <p>Try adjusting your filters or search criteria</p>
+        </div>
+    </div>
+
+    <!-- Course Detail Modal -->
+    <div class="modal" id="course-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title"></h2>
+                <div id="modal-meta"></div>
+                <button class="close-modal" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button class="btn btn-primary" id="modal-add-btn" onclick="toggleCourseFromModal()">Add to My Plan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Plan Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>📚 My Academic Plan</h2>
+            <p>Your personalized course selection</p>
+        </div>
+        <div class="sidebar-content" id="sidebar-content">
+            <p style="color: #6c757d;">Select courses to build your plan</p>
+        </div>
+    </div>
+
+    <script>
+        let allCourses = [];
+        let selectedCourses = [];
+        let currentFilter = 'all';
+        let currentArea = 'all';
+        let currentCourse = null;
+
+        // Load curriculum data
+        fetch('ieseg_complete_curriculum.json')
+            .then(response => response.json())
+            .then(data => {
+                buildCourseDatabase(data);
+                renderCourses();
+                setupAreaFilters();
+                setupSearch();
+            })
+            .catch(error => {
+                alert('Error loading data. Make sure ieseg_complete_curriculum.json is in the same folder.');
+            });
+
+        function buildCourseDatabase(data) {
+            // Bachelor courses
+            const bachelor = data.program_structure.bachelor_cycle.semesters;
+            Object.keys(bachelor).forEach(semKey => {
+                const sem = bachelor[semKey];
+                if (sem.key_components) {
+                    sem.key_components.forEach(course => {
+                        allCourses.push({
+                            name: course,
+                            cycle: 'Bachelor',
+                            semester: semKey.replace('semester_', 'Semester '),
+                            area: categorizeArea(course),
+                            ects: 3,
+                            focus: sem.focus,
+                            description: `This course is part of ${sem.name}. ${sem.focus}`,
+                            topics: extractTopics(course),
+                            skills: sem.skills_developed || []
+                        });
+                    });
+                }
+            });
+
+            // Master Core Courses
+            const coreCourses = data.program_structure.master_cycle.core_courses.courses;
+            coreCourses.forEach(course => {
+                allCourses.push({
+                    name: course.name,
+                    cycle: 'Master',
+                    category: 'Core',
+                    area: categorizeArea(course.name),
+                    ects: 4,
+                    focus: course.focus,
+                    description: course.focus,
+                    topics: extractTopics(course.name),
+                    skills: ['Leadership', 'Strategic Thinking', 'Problem Solving']
+                });
+            });
+
+            // Master Major Courses
+            const majors = data.program_structure.master_cycle.majors.available_majors;
+            majors.forEach(major => {
+                major.courses.forEach(course => {
+                    allCourses.push({
+                        name: course,
+                        cycle: 'Master',
+                        category: 'Major',
+                        major: major.name,
+                        area: major.name,
+                        ects: 4,
+                        description: `Specialized course in ${major.name}. This course prepares you for careers such as: ${major.career_paths.join(', ')}.`,
+                        topics: extractTopics(course),
+                        careerPaths: major.career_paths
+                    });
+                });
+            });
+
+            // Master Minor Courses
+            const minors = data.program_structure.master_cycle.minors.available_minors;
+            minors.forEach(minor => {
+                minor.courses.forEach(course => {
+                    allCourses.push({
+                        name: course,
+                        cycle: 'Master',
+                        category: 'Minor',
+                        minor: minor.name,
+                        area: minor.name,
+                        ects: 3,
+                        description: `Minor course in ${minor.name}. Develop dual competency by combining this with your major.`,
+                        topics: extractTopics(course)
+                    });
+                });
+            });
+        }
+
+        function categorizeArea(courseName) {
+            const name = courseName.toLowerCase();
+            if (name.includes('finance') || name.includes('accounting') || name.includes('audit')) return 'Finance & Accounting';
+            if (name.includes('marketing') || name.includes('brand') || name.includes('sales')) return 'Marketing & Sales';
+            if (name.includes('data') || name.includes('analytics') || name.includes('ai') || name.includes('digital')) return 'Technology & Data';
+            if (name.includes('management') || name.includes('strategy') || name.includes('leadership')) return 'Management & Strategy';
+            if (name.includes('hr') || name.includes('human') || name.includes('talent')) return 'Human Resources';
+            if (name.includes('operations') || name.includes('supply') || name.includes('logistics')) return 'Operations';
+            if (name.includes('entrepreneur') || name.includes('innovation') || name.includes('startup')) return 'Entrepreneurship';
+            if (name.includes('international') || name.includes('global') || name.includes('export')) return 'International Business';
+            return 'General Business';
+        }
+
+        function extractTopics(courseName) {
+            const topics = [];
+            const keywords = ['Analysis', 'Strategy', 'Management', 'Development', 'Design', 'Research', 'Consulting', 
+                            'Planning', 'Implementation', 'Optimization', 'Innovation', 'Leadership'];
+            keywords.forEach(keyword => {
+                if (courseName.toLowerCase().includes(keyword.toLowerCase())) {
+                    topics.push(keyword);
+                }
+            });
+            return topics.length > 0 ? topics : ['Business', 'Management'];
+        }
+
+        function renderCourses() {
+            const grid = document.getElementById('courses-grid');
+            const emptyState = document.getElementById('empty-state');
+            
+            let filtered = allCourses.filter(course => {
+                if (currentFilter !== 'all' && course.cycle.toLowerCase() !== currentFilter && currentFilter !== 'core') return false;
+                if (currentFilter === 'core' && course.category !== 'Core') return false;
+                if (currentArea !== 'all' && course.area !== currentArea) return false;
+                return true;
+            });
+
+            const searchTerm = document.getElementById('search-box').value.toLowerCase();
+            if (searchTerm) {
+                filtered = filtered.filter(course => 
+                    course.name.toLowerCase().includes(searchTerm) ||
+                    course.description.toLowerCase().includes(searchTerm) ||
+                    (course.topics && course.topics.some(t => t.toLowerCase().includes(searchTerm)))
+                );
+            }
+
+            if (filtered.length === 0) {
+                grid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            grid.style.display = 'grid';
+            emptyState.style.display = 'none';
+
+            grid.innerHTML = filtered.map(course => {
+                const isSelected = selectedCourses.some(c => c.name === course.name);
+                return `
+                    <div class="course-card ${isSelected ? 'selected' : ''}" onclick="openCourseDetail(${allCourses.indexOf(course)})">
+                        <div class="course-header">
+                            <div class="course-title">${course.name}</div>
+                            <button class="add-btn ${isSelected ? 'added' : ''}" onclick="event.stopPropagation(); toggleCourse(${allCourses.indexOf(course)})">
+                                ${isSelected ? '✓' : '+'}
+                            </button>
+                        </div>
+                        <div class="course-meta">
+                            <span class="meta-tag">${course.cycle}</span>
+                            ${course.category ? `<span class="meta-tag">${course.category}</span>` : ''}
+                            <span class="meta-tag">${course.ects} ECTS</span>
+                        </div>
+                        <div class="course-description">
+                            ${course.description.substring(0, 120)}...
+                        </div>
+                        ${course.topics ? `
+                            <div class="course-topics">
+                                <h5>Key Topics:</h5>
+                                ${course.topics.slice(0, 3).map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openCourseDetail(index) {
+            currentCourse = allCourses[index];
+            const modal = document.getElementById('course-modal');
+            
+            document.getElementById('modal-title').textContent = currentCourse.name;
+            document.getElementById('modal-meta').innerHTML = `
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <span class="meta-tag" style="background: rgba(255,255,255,0.2); color: white;">${currentCourse.cycle}</span>
+                    ${currentCourse.category ? `<span class="meta-tag" style="background: rgba(255,255,255,0.2); color: white;">${currentCourse.category}</span>` : ''}
+                    <span class="meta-tag" style="background: rgba(255,255,255,0.2); color: white;">${currentCourse.ects} ECTS</span>
+                </div>
+            `;
+
+            let bodyHTML = `
+                <div class="detail-section">
+                    <h3>📖 Course Overview</h3>
+                    <p>${currentCourse.description}</p>
+                </div>
+            `;
+
+            if (currentCourse.focus) {
+                bodyHTML += `
+                    <div class="detail-section">
+                        <h3>🎯 Focus Area</h3>
+                        <p>${currentCourse.focus}</p>
+                    </div>
+                `;
+            }
+
+            if (currentCourse.topics && currentCourse.topics.length > 0) {
+                bodyHTML += `
+                    <div class="detail-section">
+                        <h3>📚 Key Topics Covered</h3>
+                        <ul>
+                            ${currentCourse.topics.map(topic => `<li>${topic}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            if (currentCourse.skills && currentCourse.skills.length > 0) {
+                bodyHTML += `
+                    <div class="detail-section">
+                        <h3>💪 Skills Developed</h3>
+                        <ul>
+                            ${currentCourse.skills.map(skill => `<li>${skill}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            if (currentCourse.careerPaths && currentCourse.careerPaths.length > 0) {
+                bodyHTML += `
+                    <div class="detail-section">
+                        <h3>💼 Career Paths</h3>
+                        <p>This course prepares you for roles such as:</p>
+                        <ul>
+                            ${currentCourse.careerPaths.map(path => `<li>${path}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            if (currentCourse.semester) {
+                bodyHTML += `
+                    <div class="detail-section">
+                        <h3>📅 When to Take</h3>
+                        <p>${currentCourse.semester}</p>
+                    </div>
+                `;
+            }
+
+            if (currentCourse.major) {
+                bodyHTML += `
+                    <div class="detail-section">
+                        <h3>🎓 Part of Major</h3>
+                        <p>${currentCourse.major}</p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('modal-body').innerHTML = bodyHTML;
+            
+            const isSelected = selectedCourses.some(c => c.name === currentCourse.name);
+            document.getElementById('modal-add-btn').textContent = isSelected ? 'Remove from My Plan' : 'Add to My Plan';
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('course-modal').classList.remove('active');
+        }
+
+        function toggleCourse(index) {
+            const course = allCourses[index];
+            const existingIndex = selectedCourses.findIndex(c => c.name === course.name);
+            
+            if (existingIndex >= 0) {
+                selectedCourses.splice(existingIndex, 1);
+            } else {
+                selectedCourses.push(course);
+            }
+            
+            updatePlanCount();
+            renderCourses();
+            updateSidebar();
+        }
+
+        function toggleCourseFromModal() {
+            const index = allCourses.indexOf(currentCourse);
+            toggleCourse(index);
+            closeModal();
+        }
+
+        function updatePlanCount() {
+            document.getElementById('plan-count').textContent = selectedCourses.length;
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            updateSidebar();
+        }
+
+        function updateSidebar() {
+            const content = document.getElementById('sidebar-content');
+            
+            if (selectedCourses.length === 0) {
+                content.innerHTML = '<p style="color: #6c757d;">Select courses to build your plan</p>';
+                return;
+            }
+
+            const byCycle = selectedCourses.reduce((acc, course) => {
+                if (!acc[course.cycle]) acc[course.cycle] = [];
+                acc[course.cycle].push(course);
+                return acc;
+            }, {});
+
+            let html = '';
+            Object.keys(byCycle).forEach(cycle => {
+                html += `<div class="category-divider">${cycle} Cycle (${byCycle[cycle].length} courses)</div>`;
+                byCycle[cycle].forEach(course => {
+                    const index = allCourses.indexOf(course);
+                    html += `
+                        <div class="planned-course">
+                            <h4>${course.name}</h4>
+                            <p style="color: #6c757d; font-size: 0.9em; margin-bottom: 5px;">${course.category || ''} - ${course.ects} ECTS</p>
+                            <button class="remove-course" onclick="toggleCourse(${index})">×</button>
+                        </div>
+                    `;
+                });
+            });
+
+            const totalECTS = selectedCourses.reduce((sum, c) => sum + c.ects, 0);
+            html += `
+                <div style="margin-top: 30px; padding: 20px; background: #f8f9ff; border-radius: 10px;">
+                    <h3 style="color: #1e3c72; margin-bottom: 10px;">📊 Plan Summary</h3>
+                    <p><strong>Total Courses:</strong> ${selectedCourses.length}</p>
+                    <p><strong>Total ECTS:</strong> ${totalECTS}</p>
+                </div>
+            `;
+
+            content.innerHTML = html;
+        }
+
+        function filterCycle(cycle) {
+            currentFilter = cycle;
+            document.querySelectorAll('[data-filter]').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderCourses();
+        }
+
+        function filterArea(area) {
+            currentArea = area;
+            document.querySelectorAll('[data-area]').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (event.target) event.target.classList.add('active');
+            renderCourses();
+        }
+
+        function setupAreaFilters() {
+            const areas = [...new Set(allCourses.map(c => c.area))].sort();
+            const container = document.getElementById('area-filters');
+            container.innerHTML = `
+                <button class="filter-btn active" data-area="all" onclick="filterArea('all')">All Areas</button>
+                ${areas.map(area => `
+                    <button class="filter-btn" data-area="${area}" onclick="filterArea('${area}')">${area}</button>
+                `).join('')}
+            `;
+        }
+
+        function setupSearch() {
+            document.getElementById('search-box').addEventListener('input', () => {
+                renderCourses();
+            });
+        }
+
+        // Close modal on outside click
+        document.getElementById('course-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close sidebar on outside click
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const viewBtn = document.querySelector('.view-plan-btn');
+            if (sidebar.classList.contains('active') && 
+                !sidebar.contains(e.target) && 
+                e.target !== viewBtn) {
+                sidebar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

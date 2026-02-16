@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IÉSEG Curriculum Tools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .tool-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .tool-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .tool-card h2 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .tool-card p {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .tool-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tool-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .info-section {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .info-section h3 {
+            color: #1976D2;
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-section li {
+            padding: 8px 0;
+            color: #495057;
+        }
+
+        .info-section li:before {
+            content: "✓";
+            color: #2196F3;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 IÉSEG Curriculum Tools</h1>
+            <p>Explore, Plan & Decide Your Academic Journey</p>
+        </div>
+
+        <div class="content">
+            <div class="info-section">
+                <h3>📚 About These Tools</h3>
+                <p>Complete interactive tools to help you explore the IÉSEG School of Management curriculum, understand course options, and plan your academic path.</p>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🔍</div>
+                    <h2>Course Explorer</h2>
+                    <p>Browse 200+ courses, click for details, add to your personalized plan, and track your ECTS.</p>
+                    <a href="ieseg_course_explorer.html" class="tool-btn">Launch Explorer</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📊</div>
+                    <h2>Curriculum Viewer</h2>
+                    <p>View complete program structure, compare majors, explore double degrees and career outcomes.</p>
+                    <a href="ieseg_curriculum_viewer.html" class="tool-btn">View Curriculum</a>
+                </div>
+            </div>
+
+            <div class="info-section" style="margin-top: 40px;">
+                <h3>✨ Features</h3>
+                <ul>
+                    <li>200+ Courses from Bachelor & Master Cycles</li>
+                    <li>7 Master Majors & 7 Minor Options</li>
+                    <li>Interactive Course Details & Planning</li>
+                    <li>Double Degree Programs & Triple Degrees</li>
+                    <li>Career Paths & Employment Statistics</li>
+                    <li>Real-time ECTS Calculation</li>
+                    <li>Smart Filters & Search</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px; color: #6c757d;">
+                <p><strong>IÉSEG School of Management</strong></p>
+                <p>Lille & Paris La Défense | France</p>
+                <p style="margin-top: 10px;">EQUIS • AACSB • AMBA Accredited</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
