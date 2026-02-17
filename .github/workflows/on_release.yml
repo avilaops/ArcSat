@@ -1,9 +1,9 @@
-name: Generate Semantic Release
+name: Generate Semantic Release (DISABLED for ArcSat)
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
 jobs:
   release:
     name: Release
