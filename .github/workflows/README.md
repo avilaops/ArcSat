@@ -179,6 +179,22 @@ jobs:
 - O sistema de build atual está em [`docker/docker-compose.yml`](../docker/docker-compose.yml)
 - Para desenvolvimento local, sempre use `docker-compose up -d`
 
+### ⚠️ Correções Aplicadas
+
+**Problema de Lowercase no Docker Registry**
+
+O erro original era:
+```
+ERROR: failed to build: invalid tag "ghcr.io/avilaops/ArcSat:main": 
+repository name must be lowercase
+```
+
+**Solução aplicada:**
+- ❌ Antes: `ghcr.io/${{ github.repository }}` → `ghcr.io/avilaops/ArcSat`
+- ✅ Agora: `ghcr.io/avilaops/arcsat` (nome hardcoded em lowercase)
+
+O GitHub Container Registry **não aceita letras maiúsculas** nos nomes de repositório. Todos os nomes devem estar em lowercase.
+
 ### 🔗 Referências
 
 - [Docker Compose Local](../docker/docker-compose.yml)
