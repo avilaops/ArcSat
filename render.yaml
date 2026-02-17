@@ -1,0 +1,66 @@
+# Blueprint do Render para ArcSat CRM
+# Este arquivo configura todos os serviços necessários automaticamente
+# 
+# NOTA IMPORTANTE: O Render não suporta MariaDB nativamente.
+# Este blueprint usa uma das seguintes estratégias:
+#
+# OPÇÃO A (Recomendada): Use um MariaDB externo (Aiven, Railway, etc)
+#            Configure as variáveis MARIADB_* manualmente após o deploy
+#
+# OPÇÃO B: Comente a seção de Redis e use serviços externos para ambos
+#
+# Para usar este blueprint:
+# 1. Faça commit deste arquivo
+# 2. No Render Dashboard: New > Blueprint
+# 3. Conecte seu repositório avilaops/arcsat
+# 4. Configure as variáveis de ambiente do MariaDB manualmente
+
+services:
+  # Serviço Web - ArcSat CRM
+  - type: web
+    name: arcsat-crm
+    runtime: docker
+    repo: https://github.com/avilaops/arcsat
+    branch: main
+    dockerfilePath: ./Dockerfile
+    region: oregon
+    plan: starter  # Usar 'free' para plano gratuito (com limitações)
+    numInstances: 1
+    healthCheckPath: /api/method/ping
+    envVars:
+      # Banco de Dados - Configure estes valores manualmente
+      # após criar um MariaDB externo (Aiven, Railway, etc)
+      - key: MARIADB_HOST
+        value: SEU_HOST_MARIADB_AQUI
+      - key: MARIADB_PORT
+        value: 3306
+      - key: MARIADB_ROOT_PASSWORD
+        sync: false  # Defina manualmente no Dashboard
+      # Redis - Conectado automaticamente ao serviço abaixo
+      - key: REDIS_HOST
+        fromService:
+          name: arcsat-redis
+          type: redis
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          name: arcsat-redis
+          type: redis
+          property: port
+      # Configurações do Site
+      - key: SITE_NAME
+        value: arcsat-crm.onrender.com  # Atualize se usar domínio customizado
+      - key: ADMIN_PASSWORD
+        generateValue: true  # Gera senha aleatória - veja no Dashboard
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: SHELL
+        value: /bin/bash
+
+  # Redis Cache
+  - type: redis
+    name: arcsat-redis
+    region: oregon
+    plan: starter  # $7/mês - não há opção free para Redis
+    maxmemoryPolicy: noeviction
+    ipAllowList: []  # Permite acesso apenas de serviços dentro do Render
