@@ -1,19 +1,16 @@
 # Blueprint do Render para ArcSat CRM
 # Este arquivo configura todos os serviços necessários automaticamente
 # 
-# NOTA IMPORTANTE: O Render não suporta MariaDB nativamente.
-# Este blueprint usa uma das seguintes estratégias:
-#
-# OPÇÃO A (Recomendada): Use um MariaDB externo (Aiven, Railway, etc)
-#            Configure as variáveis MARIADB_* manualmente após o deploy
-#
-# OPÇÃO B: Comente a seção de Redis e use serviços externos para ambos
+# CONFIGURAÇÃO ATUALIZADA:
+# - PostgreSQL do Render (gratuito ou $7/mês)
+# - Redis do Render ($7/mês) ou gratuito do Render
+# - MongoDB Atlas (opcional, para integrações futuras)
 #
 # Para usar este blueprint:
 # 1. Faça commit deste arquivo
 # 2. No Render Dashboard: New > Blueprint
 # 3. Conecte seu repositório avilaops/arcsat
-# 4. Configure as variáveis de ambiente do MariaDB manualmente
+# 4. Aguarde criação automática de todos os serviços
 
 services:
   # Serviço Web - ArcSat CRM
@@ -24,19 +21,34 @@ services:
     branch: main
     dockerfilePath: ./Dockerfile
     region: oregon
-    plan: starter  # Usar 'free' para plano gratuito (com limitações)
+    plan: free  # Pode usar 'free' ou 'starter' ($7/mês)
     numInstances: 1
     healthCheckPath: /api/method/ping
     envVars:
-      # Banco de Dados - Configure estes valores manualmente
-      # após criar um MariaDB externo (Aiven, Railway, etc)
-      - key: MARIADB_HOST
-        value: SEU_HOST_MARIADB_AQUI
-      - key: MARIADB_PORT
-        value: 3306
-      - key: MARIADB_ROOT_PASSWORD
-        sync: false  # Defina manualmente no Dashboard
-      # Redis - Conectado automaticamente ao serviço abaixo
+      # Banco de Dados PostgreSQL - Conectado automaticamente
+      - key: DB_TYPE
+        value: postgres
+      - key: DB_HOST
+        fromDatabase:
+          name: arcsat-postgres
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: arcsat-postgres
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: arcsat-postgres
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: arcsat-postgres
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: arcsat-postgres
+          property: password
+      # Redis - Conectado automaticamente
       - key: REDIS_HOST
         fromService:
           name: arcsat-redis
@@ -47,11 +59,14 @@ services:
           name: arcsat-redis
           type: redis
           property: port
+      # MongoDB Atlas (para integrações futuras)
+      - key: MONGO_ATLAS_URI
+        value: mongodb+srv://nicolasrosaab_db_user:Gio4EAQhbEdQMISl@cluster0.npuhras.mongodb.net/
       # Configurações do Site
       - key: SITE_NAME
-        value: arcsat-crm.onrender.com  # Atualize se usar domínio customizado
+        value: arcsat-crm.onrender.com
       - key: ADMIN_PASSWORD
-        generateValue: true  # Gera senha aleatória - veja no Dashboard
+        generateValue: true
       - key: PYTHONUNBUFFERED
         value: "1"
       - key: SHELL
@@ -61,6 +76,13 @@ services:
   - type: redis
     name: arcsat-redis
     region: oregon
-    plan: starter  # $7/mês - não há opção free para Redis
+    plan: free  # Plano gratuito disponível!
     maxmemoryPolicy: noeviction
-    ipAllowList: []  # Permite acesso apenas de serviços dentro do Render
+    ipAllowList: []
+
+# Banco de Dados PostgreSQL (compatível com Frappe)
+databases:
+  - name: arcsat-postgres
+    databaseName: arcsat_crm
+    user: arcsat_user
+    plan: free  # Plano gratuito: 256 MB RAM, 1 GB storage

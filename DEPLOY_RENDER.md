@@ -1,6 +1,6 @@
 # Deploy do ArcSat CRM no Render
 
-Este guia mostra como fazer deploy do ArcSat CRM no Render.com usando Docker.
+Este guia mostra como fazer deploy do ArcSat CRM no Render.com usando Docker com PostgreSQL.
 
 ## 📋 Pré-requisitos
 
@@ -12,15 +12,22 @@ Este guia mostra como fazer deploy do ArcSat CRM no Render.com usando Docker.
   - `docker/init-render.sh` (script de inicialização)
   - `.dockerignore` (otimização do build)
 
+## 🎯 Arquitetura do Deploy
+
+O ArcSat CRM no Render usa:
+- **PostgreSQL** (banco principal - gratuito no Render!)
+- **Redis** (cache - gratuito no Render!)
+- **MongoDB Atlas** (opcional - para integrações futuras)
+
 ## 🚀 Opção 1: Deploy Automático com Blueprint (Recomendado)
 
-Esta opção cria todos os serviços automaticamente (Web Service + MariaDB + Redis).
+Esta opção cria todos os serviços automaticamente (Web Service + PostgreSQL + Redis).
 
 ### Passo 1: Fazer Commit e Push dos Arquivos
 
 ```bash
-git add Dockerfile render.yaml docker/init-render.sh .dockerignore
-git commit -m "Adicionar configuração para deploy no Render"
+git add Dockerfile render.yaml docker/init-render.sh .dockerignore DEPLOY_RENDER.md
+git commit -m "Atualizar configuração para PostgreSQL no Render"
 git push origin main
 ```
 
@@ -34,11 +41,12 @@ git push origin main
 6. Revise as configurações e clique em **"Apply"**
 
 O Render criará automaticamente:
-- ✅ Web Service (ArcSat CRM)
-- ✅ Banco de Dados MariaDB
-- ✅ Redis Cache
-- ✅ Variáveis de ambiente configuradas
+- ✅ Web Service (ArcSat CRM) - FREE ou Starter
+- ✅ Banco de Dados PostgreSQL - FREE (256 MB RAM, 1 GB storage)
+- ✅ Redis Cache - FREE
+- ✅ Variáveis de ambiente configuradas automaticamente
 - ✅ Senha de admin gerada automaticamente
+- ✅ MongoDB Atlas URI configurado para integrações
 
 ### Passo 3: Aguardar Deploy
 
@@ -194,24 +202,29 @@ No Dashboard você pode ver:
 
 ## 💰 Custos Estimados
 
-### Plano Free
+### Plano 100% Gratuito ✅
 - Web Service: $0/mês (512 MB RAM, 0.1 CPU)
-- Redis: Não disponível no free tier
-- MariaDB: Usar serviço externo gratuito
+- PostgreSQL: $0/mês (256 MB RAM, 1 GB storage)
+- Redis: $0/mês (25 MB)
+- **Total: $0/mês** 🎉
 
 ⚠️ **Limitações do Free:**
-- Serviço hiberna após 15 minutos de inatividade
-- 750 horas/mês (equivale a 1 serviço 24/7)
+- Web service hiberna após 15 minutos de inatividade
+- 750 horas/mês por serviço (equivale a 1 serviço 24/7)
 - Tempo de boot: ~30 segundos ao acordar
+- Banco de dados limitado a 1 GB
 
-### Plano Starter (Recomendado)
+### Plano Starter (Sem Hibernar)
 - Web Service: $7/mês (512 MB RAM)
-- Redis: $7/mês  
-- PostgreSQL: $7/mês (ou MariaDB externo)
-- **Total:** ~$21/mês
+- PostgreSQL: $7/mês (256 MB RAM, 1 GB storage, sem hibernar)
+- Redis: $0/mês (plano free)
+- **Total:** ~$14/mês
 
 ### Plano Professional
 - Web Service: $25/mês (2 GB RAM, 1 CPU)
+- PostgreSQL: $25/mês (1 GB RAM, 10 GB storage)
+- Redis: $7/mês (256 MB)
+- **Total:** ~$57/mês
 - Melhor performance e uptime
 - Backups automáticos incluídos
 

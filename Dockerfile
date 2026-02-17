@@ -3,10 +3,12 @@ FROM frappe/bench:latest
 
 USER root
 
-# Instalar dependências do sistema
+# Instalar dependências do sistema (PostgreSQL e MariaDB clients)
 RUN apt-get update && apt-get install -y \
     git \
+    postgresql-client \
     mariadb-client \
+    redis-tools \
     && rm -rf /var/lib/apt/lists/*
 
 USER frappe
