@@ -75,8 +75,8 @@
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/avilaops/ArcSat.git
-cd ArcSat
+git clone https://github.com/avilaops/arcsat.git
+cd arcsat
 
 # 2. Configure as variáveis de ambiente (opcional)
 cp .env.example .env
@@ -262,11 +262,11 @@ Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 ## 💬 Suporte
 
 ### Comunidade
-- 🐛 [Issues](https://github.com/avilaops/ArcSat/issues) - Reporte bugs
-- 💡 [Discussões](https://github.com/avilaops/ArcSat/discussions) - Perguntas e ideias
+- 🐛 [Issues](https://github.com/avilaops/arcsat/issues) - Reporte bugs
+- 💡 [Discussões](https://github.com/avilaops/arcsat/discussions) - Perguntas e ideias
 
 ### Documentação
-- 📖 [Wiki](https://github.com/avilaops/ArcSat/wiki) - Guias completos
+- 📖 [Wiki](https://github.com/avilaops/arcsat/wiki) - Guias completos
 - 📚 [Docs](docs/) - Documentação técnica
 
 ### Contato
@@ -288,7 +288,7 @@ Este projeto é baseado em:
 
 Se este projeto foi útil para você, considere dar uma ⭐!
 
-[![Star History Chart](https://api.star-history.com/svg?repos=avilaops/ArcSat&type=Date)](https://star-history.com/#avilaops/ArcSat&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=avilaops/arcsat&type=Date)](https://star-history.com/#avilaops/arcsat&Date)
 
 ---
 
