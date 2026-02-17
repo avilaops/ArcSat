@@ -1,116 +1,141 @@
-
-name: CI (DISABLED for ArcSat)
+name: ArcSat CI
 
 on:
-  # pull_request:
-  #   paths-ignore:
-  #     - "**.css"
-  #     - "**.js"
-  #     - "**.md"
-  #     - "**.html"
-  #     - "**.csv"
-  #     - "**.po"
-  #     - "**.pot"
-  # schedule:
-  #   # Run everday at midnight UTC / 5:30 IST
-  #   - cron: "0 0 * * *"
+  pull_request:
+    paths-ignore:
+      - "**.css"
+      - "**.js"
+      - "**.md"
+      - "**.html"
   workflow_dispatch:
+
 env:
-    CRM_BRANCH: ${{ github.base_ref || github.ref_name }}
+  ARCSAT_BRANCH: ${{ github.head_ref || github.ref_name }}
 
 concurrency:
-  group: develop-crm-${{ github.event.number }}
+  group: ci-arcsat-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   tests:
-    name: Server
+    name: ArcSat Tests
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    strategy:
-      fail-fast: false
 
     services:
-      mysql:
-        image: mariadb:10.6
+      mariadb:
+        image: mariadb:10.8
         env:
           MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=5s --health-timeout=2s --health-retries=3
+
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
 
     steps:
-      - name: Clone
-        uses: actions/checkout@v3
+      - name: Checkout ArcSat
+        uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
-      - name: Check for valid Python & Merge Conflicts
-        run: |
-          python -m compileall -f "${GITHUB_WORKSPACE}"
-          if grep -lr --exclude-dir=node_modules "^<<<<<<< " "${GITHUB_WORKSPACE}"
-              then echo "Found merge conflicts"
-              exit 1
-          fi
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           check-latest: true
 
-      - name: Install Yarn
-        run: npm install -g yarn
-
       - name: Add to Hosts
-        run: echo "127.0.0.1 test_site" | sudo tee -a /etc/hosts
+        run: echo "127.0.0.1 test.localhost" | sudo tee -a /etc/hosts
 
       - name: Cache pip
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/*requirements.txt', '**/pyproject.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-            ${{ runner.os }}-
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
 
       - name: Cache node modules
         uses: actions/cache@v4
-        env:
-          cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: 'echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT'
-
-      - uses: actions/cache@v4
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install
+      - name: Install Frappe Bench
         run: |
-          bash ${GITHUB_WORKSPACE}/.github/helper/install.sh
-        env:
-          TYPE: server
+          pip install frappe-bench
+          
+      - name: Init Frappe Bench
+        run: |
+          bench init --skip-redis-config-generation --python python3.11 --frappe-branch version-15 frappe-bench
+          cd frappe-bench
+
+      - name: Install ArcSat App
+        working-directory: frappe-bench
+        run: |
+          # Copiar código do ArcSat para dentro do bench
+          cp -r ${{ github.workspace }}/crm apps/crm
+          
+          # Instalar dependências Python do ArcSat
+          bench pip install -e apps/crm
+
+      - name: Create Test Site
+        working-directory: frappe-bench
+        run: |
+          bench new-site test.localhost \
+            --db-root-password root \
+            --admin-password admin \
+            --no-mariadb-socket
+          
+          bench --site test.localhost install-app crm
+          bench --site test.localhost set-config developer_mode 1
 
       - name: Run Tests
-        working-directory: /home/runner/frappe-bench
+        working-directory: frappe-bench
         run: |
-          bench --site test_site set-config allow_tests true
-          bench --site test_site run-tests --app crm
-        env:
-          TYPE: server
+          bench --site test.localhost run-tests --app crm --coverage
+
+      - name: Show Coverage
+        if: always()
+        working-directory: frappe-bench
+        run: |
+          coverage report || true
+          coverage html || true
+
+      - name: Upload Coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: frappe-bench/htmlcov/
+
+  lint:
+    name: Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Pre-commit
+        run: pip install pre-commit
+
+      - name: Cache pre-commit
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Run Linters
+        run: |
+          cd crm
+          pre-commit run --all-files --show-diff-on-failure || true

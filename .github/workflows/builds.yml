@@ -1,65 +1,85 @@
-name: Build Container Image (DISABLED - Use docker/ folder instead)
+name: Build ArcSat Docker Image
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
-  #   tags:
-  #     - "*"
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
 
 jobs:
   build:
-    name: Build
-
+    name: Build ${{ matrix.arch }}
     runs-on: ubuntu-latest
-
+    
     strategy:
       matrix:
         arch: [amd64, arm64]
-
+    
     steps:
-      - name: Checkout Entire Repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
-
+      
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-
+      
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-        with:
-          platforms: linux/${{ matrix.arch }}
-
+      
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set Branch
-        run: |
-          export APPS_JSON='[{"url": "https://github.com/frappe/crm","branch": "main"}]'
-          echo "APPS_JSON_BASE64=$(echo $APPS_JSON | base64 -w 0)" >> $GITHUB_ENV
-          echo "FRAPPE_BRANCH=version-15" >> $GITHUB_ENV
-
-      - name: Set Image Tag
-        run: |
-          echo "IMAGE_TAG=stable" >> $GITHUB_ENV
-
-      - uses: actions/checkout@v4
+      
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
         with:
-          repository: frappe/frappe_docker
-          path: builds
-
+          images: ghcr.io/avilaops/arcsat
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=latest,enable={{is_default_branch}}
+      
+      - name: Create Dockerfile
+        working-directory: docker
+        run: |
+          cat > Dockerfile <<'EOF'
+          FROM frappe/bench:latest
+          
+          LABEL org.opencontainers.image.source=https://github.com/avilaops/arcsat
+          LABEL org.opencontainers.image.description="ArcSat/Avx CRM - Sistema ERP com integração CNPJ/CPF"
+          LABEL org.opencontainers.image.licenses=AGPLv3
+          
+          WORKDIR /home/frappe
+          
+          # Copiar código do ArcSat
+          COPY --chown=frappe:frappe ../crm /home/frappe/arcsat-crm
+          COPY --chown=frappe:frappe init.sh /home/frappe/init-arcsat.sh
+          
+          # Tornar script executável
+          RUN chmod +x /home/frappe/init-arcsat.sh
+          
+          # Modificar init script para usar código local
+          RUN sed -i 's|bench get-app crm --branch main|cp -r /home/frappe/arcsat-crm /home/frappe/frappe-bench/apps/crm|g' /home/frappe/init-arcsat.sh
+          
+          EXPOSE 8000 9000
+          
+          CMD ["/bin/bash", "/home/frappe/init-arcsat.sh"]
+          EOF
+      
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
+          context: .
+          file: docker/Dockerfile
+          platforms: linux/${{ matrix.arch }}
           push: true
-          context: builds
-          file: builds/images/layered/Containerfile
-          tags: >
-            ghcr.io/avilaops/arcsat:${{ github.ref_name }},
-            ghcr.io/avilaops/arcsat:${{ env.IMAGE_TAG }}
-          build-args: |
-            "FRAPPE_BRANCH=${{ env.FRAPPE_BRANCH }}"
-            "APPS_JSON_BASE64=${{ env.APPS_JSON_BASE64 }}"
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

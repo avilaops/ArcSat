@@ -2,22 +2,155 @@
 
 ## 📋 Status dos Workflows
 
-Este repositório **desabilitou os workflows automáticos** do Frappe CRM original, pois são incompatíveis com a versão customizada **ArcSat/Avx**.
+Este repositório possui **workflows adaptados** especificamente para o **ArcSat/Avx**, sem depender dos repositórios originais do Frappe.
 
-### ❌ Workflows Desabilitados
+### ✅ Workflows Ativos
 
-| Workflow | Status | Motivo |
-|----------|--------|--------|
-| **builds.yml** | 🔴 Desabilitado | Tentava construir do repo `frappe/crm` original |
-| **ci.yml** | 🔴 Desabilitado | Testes configurados para Frappe, não ArcSat |
-| **linters.yml** | 🔴 Desabilitado | Usa regras Semgrep do Frappe |
-| **on_release.yml** | 🔴 Desabilitado | Usa credenciais do Frappe PR Bot |
-| **generate-pot-file.yml** | ✅ Ativo | Pode manter para i18n |
-| **release_notes.yml** | ✅ Ativo | Funcional |
+| Workflow | Status | Descrição | Trigger |
+|----------|--------|-----------|---------|
+| **builds.yml** | 🟢 Ativo | Constrói imagens Docker do ArcSat | Push em main, tags, manual |
+| **ci.yml** | 🟢 Ativo | Testes automatizados do ArcSat | Pull requests, manual |
+| **linters.yml** | 🟢 Ativo | Validação de código Python | Pull requests, manual |
+| **on_release.yml** | 🟢 Ativo | Cria releases semânticas | Push em main, tags, manual |
+| **generate-pot-file.yml** | ✅ Mantido | Geração de arquivos de tradução | Automático |
+| **release_notes.yml** | ✅ Mantido | Notas de release | Automático |
+
+### 🎯 Diferenças dos Workflows Originais
+
+#### ❌ Antes (Frappe CRM Original)
+```yaml
+# Baixava código do Frappe
+- repository: frappe/crm
+- repository: frappe/frappe_docker
+
+# Usava configurações do Frappe
+APPS_JSON='[{"url": "https://github.com/frappe/crm"}]'
+```
+
+#### ✅ Agora (ArcSat Customizado)
+```yaml
+# Usa código do próprio repositório
+- uses: actions/checkout@v4  # Pega código do arcsat
+
+# Copia o app ArcSat local
+cp -r crm apps/crm
+
+# Constrói Docker a partir do código local
+COPY ../crm /home/frappe/arcsat-crm
+```
+
+### 📦 Workflow: builds.yml
+
+**Função:** Constrói imagens Docker multi-arquitetura do ArcSat
+
+**Como funciona:**
+1. Faz checkout do código do ArcSat
+2. Cria Dockerfile dinamicamente
+3. Copia o código `crm/` para dentro da imagem
+4. Modifica o script de inicialização para usar código local
+5. Constrói para amd64 e arm64
+6. Faz push para `ghcr.io/avilaops/arcsat`
+
+**Tags geradas:**
+- `ghcr.io/avilaops/arcsat:main`
+- `ghcr.io/avilaops/arcsat:latest`
+- `ghcr.io/avilaops/arcsat:v1.2.3` (quando taguear)
+
+**Executar manualmente:**
+```bash
+# No GitHub
+Actions → Build ArcSat Docker Image → Run workflow
+```
+
+### 🧪 Workflow: ci.yml
+
+**Função:** Testa o ArcSat automaticamente em PRs
+
+**Como funciona:**
+1. Inicia MariaDB e Redis
+2. Instala Frappe Bench
+3. **Copia código do ArcSat local** (não clona do Frappe)
+4. Cria site de teste
+5. Roda testes com coverage
+6. Gera relatório de cobertura
+
+**Features:**
+- ✅ Python 3.11 (como seu local)
+- ✅ Cache de pip e npm
+- ✅ Relatório de coverage como artefato
+- ✅ Sem dependência do frappe/crm
+
+### 🔍 Workflow: linters.yml
+
+**Função:** Valida qualidade do código
+
+**Checks:**
+1. **Semantic Commits** - Valida mensagens de commit
+2. **Python Linter** - Roda pre-commit no código do ArcSat
+
+**Sem:**
+- ❌ Semgrep do Frappe (removido)
+- ❌ Regras específicas do Frappe
+
+### 🚀 Workflow: on_release.yml
+
+**Função:** Cria releases automáticas
+
+**Configuração:**
+- Bot: "ArcSat Bot"
+- Email: avilaops@github.com
+- Usa semantic-release padrão
+
+### 🛠️ Como Usar
+
+#### Build Manual de Imagem Docker
+```bash
+# Via GitHub Actions
+1. Acesse: https://github.com/avilaops/arcsat/actions
+2. Selecione: "Build ArcSat Docker Image"
+3. Clique: "Run workflow"
+4. Aguarde ~10 minutos
+
+# Resultado
+ghcr.io/avilaops/arcsat:latest
+```
+
+#### Usar Imagem Docker Publicada
+```bash
+# Pull da imagem
+docker pull ghcr.io/avilaops/arcsat:latest
+
+# Rodar
+docker run -d \
+  -p 8080:8000 \
+  -p 9001:9000 \
+  --name arcsat \
+  ghcr.io/avilaops/arcsat:latest
+```
+
+#### Rodar Testes Localmente
+```bash
+# Mesmo processo do CI
+bench init --python python3.11 frappe-bench
+cd frappe-bench
+cp -r /path/to/arcsat/crm apps/crm
+bench pip install -e apps/crm
+bench new-site test.localhost --admin-password admin
+bench --site test.localhost install-app crm
+bench --site test.localhost run-tests --app crm
+```
 
 ### ✅ Sistema de Build Atual
 
 **Use o Docker Compose local:**
+
+```bash
+# Localização do Docker setup
+cd docker/
+
+### 📝 Sistema de Build Local
+
+Para desenvolvimento local, use o Docker Compose:
 
 ```bash
 # Localização do Docker setup
@@ -34,170 +167,10 @@ docker logs -f crm-frappe-1
 # ERP: http://localhost:8080/app
 ```
 
-### 🔧 Se Precisar de CI/CD
-
-Para configurar CI/CD personalizado para o **ArcSat**, você pode:
-
-#### Opção 1: Docker Build Simples
-
-```yaml
-name: Build ArcSat Docker Image
-
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Build Docker Image
-        working-directory: docker
-        run: docker-compose build
-      
-      - name: Tag Image
-        run: |
-          docker tag crm-frappe:latest ghcr.io/${{ github.repository }}:latest
-      
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Push Image
-        run: docker push ghcr.io/${{ github.repository }}:latest
-```
-
-#### Opção 2: Build Nativo (sem Docker)
-
-```yaml
-name: Test ArcSat
-
-on:
-  pull_request:
-  push:
-    branches: [main]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    
-    services:
-      mariadb:
-        image: mariadb:10.8
-        env:
-          MYSQL_ROOT_PASSWORD: root
-        ports:
-          - 3306:3306
-    
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      
-      - name: Install Frappe Bench
-        run: |
-          pip install frappe-bench
-          bench init --skip-redis-config-generation frappe-bench
-          cd frappe-bench
-      
-      - name: Install ArcSat
-        run: |
-          cd frappe-bench
-          bench get-app ${{ github.workspace }}
-          bench new-site test.localhost --admin-password admin --db-root-password root
-          bench --site test.localhost install-app crm
-      
-      - name: Run Tests
-        run: |
-          cd frappe-bench
-          bench --site test.localhost run-tests --app crm
-```
-
-#### Opção 3: GitHub Actions com Multi-arch
-
-```yaml
-name: Build Multi-Architecture Image
-
-on:
-  push:
-    branches: [main]
-    tags: ['v*']
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-      
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: docker
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-```
-
-### 📝 Notas
-
-- Os workflows originais do Frappe CRM foram **intencionalmente desabilitados**
-- Para reativá-los manualmente, use `workflow_dispatch` no GitHub Actions
-- O sistema de build atual está em [`docker/docker-compose.yml`](../docker/docker-compose.yml)
-- Para desenvolvimento local, sempre use `docker-compose up -d`
-
-### ⚠️ Correções Aplicadas
-
-**Problema de Lowercase no Docker Registry**
-
-O erro original era:
-```
-ERROR: failed to build: invalid tag "ghcr.io/avilaops/ArcSat:main": 
-repository name must be lowercase
-```
-
-**Solução aplicada:**
-- ❌ Antes: `ghcr.io/${{ github.repository }}` → `ghcr.io/avilaops/ArcSat`
-- ✅ Agora: `ghcr.io/avilaops/arcsat` (nome hardcoded em lowercase)
-
-O GitHub Container Registry **não aceita letras maiúsculas** nos nomes de repositório. Todos os nomes devem estar em lowercase.
-
 ### 🔗 Referências
 
 - [Docker Compose Local](../docker/docker-compose.yml)
 - [Documentação de Integração](../INTEGRACAO_ERPNEXT.md)
 - [Instalação CNPJ/CPF](../INSTALAR_CNPJ_CPF.md)
 - [GitHub Actions Docs](https://docs.github.com/actions)
+
