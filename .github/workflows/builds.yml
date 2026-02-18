@@ -12,6 +12,12 @@ jobs:
     name: Build ${{ matrix.arch }}
     runs-on: ubuntu-latest
     
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+    
     strategy:
       matrix:
         arch: [amd64, arm64]
