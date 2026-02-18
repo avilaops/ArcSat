@@ -46,9 +46,8 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
       
       - name: Create Dockerfile
-        working-directory: docker
         run: |
-          cat > Dockerfile <<'EOF'
+          cat > docker/Dockerfile <<'EOF'
           FROM frappe/bench:latest
           
           LABEL org.opencontainers.image.source=https://github.com/avilaops/arcsat
@@ -57,9 +56,9 @@ jobs:
           
           WORKDIR /home/frappe
           
-          # Copiar código do ArcSat
-          COPY --chown=frappe:frappe ../crm /home/frappe/arcsat-crm
-          COPY --chown=frappe:frappe init.sh /home/frappe/init-arcsat.sh
+          # Copiar código do ArcSat (context é a raiz do repo)
+          COPY --chown=frappe:frappe crm /home/frappe/arcsat-crm
+          COPY --chown=frappe:frappe docker/init.sh /home/frappe/init-arcsat.sh
           
           # Tornar script executável
           RUN chmod +x /home/frappe/init-arcsat.sh
