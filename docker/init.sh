@@ -13,7 +13,8 @@ bench init --skip-redis-config-generation frappe-bench --version version-15 --py
 cd frappe-bench
 
 # Use containers instead of localhost
-bench set-mariadb-host mariadb
+bench set-config -g db_host postgres
+bench set-config -g db_port 5432
 bench set-redis-cache-host redis://redis:6379
 bench set-redis-queue-host redis://redis:6379
 bench set-redis-socketio-host redis://redis:6379
@@ -26,9 +27,12 @@ bench get-app crm --branch main
 
 bench new-site crm.localhost \
     --force \
-    --mariadb-root-password 123 \
-    --admin-password admin \
-    --no-mariadb-socket
+    --db-type postgres \
+    --db-host postgres \
+    --db-port 5432 \
+    --db-name frappe \
+    --db-password frappe123 \
+    --admin-password admin
 
 bench --site crm.localhost install-app crm
 bench --site crm.localhost set-config developer_mode 1

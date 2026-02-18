@@ -16,10 +16,9 @@ services:
   # Serviço Web - ArcSat CRM
   - type: web
     name: arcsat-crm
-    runtime: docker
-    repo: https://github.com/avilaops/arcsat
-    branch: main
-    dockerfilePath: ./Dockerfile
+    runtime: image
+    image:
+      url: ghcr.io/avilaops/arcsat:latest
     region: oregon
     plan: free  # Pode usar 'free' ou 'starter' ($7/mês)
     numInstances: 1

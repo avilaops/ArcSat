@@ -51,37 +51,11 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=raw,value=latest,enable={{is_default_branch}}
       
-      - name: Create Dockerfile
-        run: |
-          cat > docker/Dockerfile <<'EOF'
-          FROM frappe/bench:latest
-          
-          LABEL org.opencontainers.image.source=https://github.com/avilaops/arcsat
-          LABEL org.opencontainers.image.description="ArcSat/Avx CRM - Sistema ERP com integração CNPJ/CPF"
-          LABEL org.opencontainers.image.licenses=AGPLv3
-          
-          WORKDIR /home/frappe
-          
-          # Copiar código do ArcSat (context é a raiz do repo)
-          COPY --chown=frappe:frappe crm /home/frappe/arcsat-crm
-          COPY --chown=frappe:frappe docker/init.sh /home/frappe/init-arcsat.sh
-          
-          # Tornar script executável
-          RUN chmod +x /home/frappe/init-arcsat.sh
-          
-          # Modificar init script para usar código local
-          RUN sed -i 's|bench get-app crm --branch main|cp -r /home/frappe/arcsat-crm /home/frappe/frappe-bench/apps/crm|g' /home/frappe/init-arcsat.sh
-          
-          EXPOSE 8000 9000
-          
-          CMD ["/bin/bash", "/home/frappe/init-arcsat.sh"]
-          EOF
-      
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: docker/Dockerfile
+          file: ./Dockerfile
           platforms: linux/${{ matrix.arch }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}

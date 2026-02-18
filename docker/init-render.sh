@@ -21,36 +21,20 @@ done
 
 echo "Redis está pronto!"
 
-# Verificar se bench já existe
-if [ -d "/home/frappe/frappe-bench/apps/frappe" ]; then
-    echo "Bench já existe, usando existente..."
-    cd frappe-bench
-else
-    echo "Criando novo bench..."
-    bench init --skip-redis-config-generation frappe-bench --version version-15 --python python3.11
-    cd frappe-bench
-    
-    # Configurar conexões com PostgreSQL
-    echo "Configurando conexão com PostgreSQL..."
-    bench set-config db_host "${DB_HOST}"
-    bench set-config db_port "${DB_PORT:-5432}"
-    bench set-config db_type "postgres"
-    
-    # Configurar Redis
-    echo "Configurando conexão com Redis..."
-    bench set-redis-cache-host "redis://${REDIS_HOST}:${REDIS_PORT:-6379}"
-    bench set-redis-queue-host "redis://${REDIS_HOST}:${REDIS_PORT:-6379}"
-    bench set-redis-socketio-host "redis://${REDIS_HOST}:${REDIS_PORT:-6379}"
-    
-    # Remover redis e watch do Procfile (usaremos serviços externos)
-    sed -i '/redis/d' ./Procfile
-    sed -i '/watch/d' ./Procfile
-    
-    # Copiar código do ArcSat CRM
-    echo "Instalando ArcSat CRM..."
-    cp -r /tmp/arcsat-crm ./apps/crm
-    bench --site all install-app crm || true
-fi
+# Usar bench que já vem pronto na imagem Docker
+echo "Usando bench pré-configurado da imagem..."
+cd /home/frappe/frappe-bench
+
+# Configurar conexões com PostgreSQL e Redis dinamicamente
+echo "Configurando conexão com PostgreSQL..."
+bench set-config db_host "${DB_HOST}"
+bench set-config db_port "${DB_PORT:-5432}"
+bench set-config db_type "postgres"
+
+echo "Configurando conexão com Redis..."
+bench set-redis-cache-host "redis://${REDIS_HOST}:${REDIS_PORT:-6379}"
+bench set-redis-queue-host "redis://${REDIS_HOST}:${REDIS_PORT:-6379}"
+bench set-redis-socketio-host "redis://${REDIS_HOST}:${REDIS_PORT:-6379}"
 
 # Verificar se site já existe
 SITE_NAME="${SITE_NAME:-crm.localhost}"
