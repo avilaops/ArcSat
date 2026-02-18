@@ -26,7 +26,8 @@ RUN bench init --skip-redis-config-generation frappe-bench \
 WORKDIR /home/frappe/frappe-bench
 
 # Copiar e instalar ArcSat CRM app (BUILD TIME)
-COPY --chown=frappe:frappe ./crm ./apps/crm
+# Copia o repositório inteiro (inclui pyproject.toml na raiz)
+COPY --chown=frappe:frappe . ./apps/crm
 
 # Instalar app manualmente (sem precisar de .git)
 RUN cd /home/frappe/frappe-bench \
