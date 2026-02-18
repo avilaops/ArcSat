@@ -27,7 +27,11 @@ WORKDIR /home/frappe/frappe-bench
 
 # Copiar e instalar ArcSat CRM app (BUILD TIME)
 COPY --chown=frappe:frappe ./crm ./apps/crm
-RUN bench get-app --skip-assets crm file:///home/frappe/frappe-bench/apps/crm
+
+# Instalar app manualmente (sem precisar de .git)
+RUN cd /home/frappe/frappe-bench \
+    && echo "crm" >> sites/apps.txt \
+    && /home/frappe/frappe-bench/env/bin/pip install --quiet -e ./apps/crm
 
 # Build dos assets (BUILD TIME - pesado, mas s\u00f3 uma vez)
 RUN bench build --apps frappe,crm
